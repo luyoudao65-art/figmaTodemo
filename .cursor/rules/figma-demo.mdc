@@ -1,0 +1,41 @@
+---
+description: Figma-to-demo frontend rules for this React + TypeScript mobile app. Use for page implementation, interaction wiring, screen polish, and visual consistency.
+globs: ["src/**/*.ts", "src/**/*.tsx", "src/**/*.css"]
+alwaysApply: false
+---
+
+# Intent
+
+This repo exists to turn a Figma demo into a polished interactive frontend.
+
+Prioritize:
+
+- close Figma fidelity
+- strong demo feel
+- React + TypeScript implementation quality
+- consistent visual taste
+
+# Stack
+
+- React 18
+- TypeScript
+- Vite
+- current styling source of truth is `src/styles.css`
+- preferred future direction for new UI work is Tailwind CSS, if introduced deliberately
+
+# Rules
+
+- Reuse existing page pieces and repeated UI patterns before creating new one-off structures.
+- Keep `App.tsx` thin and place screen code in `src/pages/`.
+- Use local state for demo navigation and interaction unless the project outgrows it.
+- Do not invent backend logic.
+- Add short `TODO` comments when real product logic is unclear.
+- Preserve the same tone as the Figma design: soft depth, clean hierarchy, rounded surfaces, and mobile-first composition.
+- Avoid generic design-system defaults that dilute the visual identity.
+- If multiple screens share a stable pattern, extract a subcomponent.
+- Validate final spacing, typography scale, and tab/entry interactions against the Figma screenshot.
+
+# Required Checks
+
+- Run `npm run build` after meaningful changes.
+- Make sure mobile frame layouts still render correctly.

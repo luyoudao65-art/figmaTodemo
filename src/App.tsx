@@ -4,93 +4,145 @@ import { MomentPage } from './pages/MomentPage';
 import { PlanPage } from './pages/PlanPage';
 import { WiloPage } from './pages/WiloPage';
 
-type Screen = 'home' | 'moment-day' | 'moment-week' | 'plan' | 'wilo';
+type Screen = 'home' | 'moment-day' | 'moment-week' | 'moment-month' | 'plan' | 'wilo';
+type MomentOverlay = 'none' | 'wilo-suggest' | 'agent-analysis';
 
 function App() {
   const [screen, setScreen] = useState<Screen>('home');
-  const [analysisOpen, setAnalysisOpen] = useState(false);
+  const [momentOverlay, setMomentOverlay] = useState<MomentOverlay>('none');
   const [returnScreen, setReturnScreen] = useState<Exclude<Screen, 'wilo'>>('home');
+  const [planReturnScreen, setPlanReturnScreen] = useState<'home' | 'moment-week'>('moment-week');
 
   const openWilo = (from: Exclude<Screen, 'wilo'>) => {
     setReturnScreen(from);
     setScreen('wilo');
   };
 
-  if (screen === 'wilo') {
-    return <WiloPage onBack={() => setScreen(returnScreen)} />;
-  }
+  let content;
 
-  if (screen === 'moment-day') {
-    return (
+  if (screen === 'wilo') {
+    content = <WiloPage onBack={() => setScreen(returnScreen)} />;
+  } else if (screen === 'moment-day') {
+    content = (
       <MomentPage
         mode="day"
         onGoHome={() => {
-          setAnalysisOpen(false);
+          setMomentOverlay('none');
           setScreen('home');
         }}
         onOpenDay={() => setScreen('moment-day')}
         onOpenWeek={() => setScreen('moment-week')}
-        onOpenAnalysis={() => {
+        onOpenMonth={() => setScreen('moment-month')}
+        onOpenWiloSuggest={() => {
           setScreen('moment-week');
-          setAnalysisOpen(true);
+          setMomentOverlay('wilo-suggest');
         }}
-        onCloseAnalysis={() => setAnalysisOpen(false)}
+        onOpenAgentAnalysis={() => {
+          setScreen('moment-week');
+          setMomentOverlay('agent-analysis');
+        }}
+        onCloseOverlay={() => setMomentOverlay('none')}
         onConfirmPlan={() => {
-          setAnalysisOpen(false);
+          setMomentOverlay('none');
+          setPlanReturnScreen('moment-week');
           setScreen('plan');
         }}
         onOpenWilo={() => openWilo('moment-day')}
       />
     );
-  }
-
-  if (screen === 'moment-week') {
-    return (
+  } else if (screen === 'moment-week') {
+    content = (
       <MomentPage
         mode="week"
-        analysisOpen={analysisOpen}
+        overlay={momentOverlay}
         onGoHome={() => {
-          setAnalysisOpen(false);
+          setMomentOverlay('none');
           setScreen('home');
         }}
         onOpenDay={() => {
-          setAnalysisOpen(false);
+          setMomentOverlay('none');
           setScreen('moment-day');
         }}
         onOpenWeek={() => setScreen('moment-week')}
-        onOpenAnalysis={() => setAnalysisOpen(true)}
-        onCloseAnalysis={() => setAnalysisOpen(false)}
+        onOpenMonth={() => setScreen('moment-month')}
+        onOpenWiloSuggest={() => setMomentOverlay('wilo-suggest')}
+        onOpenAgentAnalysis={() => setMomentOverlay('agent-analysis')}
+        onCloseOverlay={() => setMomentOverlay('none')}
         onConfirmPlan={() => {
-          setAnalysisOpen(false);
+          setMomentOverlay('none');
+          setPlanReturnScreen('moment-week');
           setScreen('plan');
         }}
         onOpenWilo={() => openWilo('moment-week')}
       />
     );
-  }
-
-  if (screen === 'plan') {
-    return (
+  } else if (screen === 'moment-month') {
+    content = (
+      <MomentPage
+        mode="month"
+        overlay={momentOverlay}
+        onGoHome={() => {
+          setMomentOverlay('none');
+          setScreen('home');
+        }}
+        onOpenDay={() => {
+          setMomentOverlay('none');
+          setScreen('moment-day');
+        }}
+        onOpenWeek={() => {
+          setMomentOverlay('none');
+          setScreen('moment-week');
+        }}
+        onOpenMonth={() => setScreen('moment-month')}
+        onOpenWiloSuggest={() => setMomentOverlay('wilo-suggest')}
+        onOpenAgentAnalysis={() => setMomentOverlay('agent-analysis')}
+        onCloseOverlay={() => setMomentOverlay('none')}
+        onConfirmPlan={() => {
+          setMomentOverlay('none');
+          setPlanReturnScreen('moment-week');
+          setScreen('plan');
+        }}
+        onOpenWilo={() => openWilo('moment-month')}
+      />
+    );
+  } else if (screen === 'plan') {
+    content = (
       <PlanPage
-        onBack={() => setScreen('moment-week')}
+        onBack={() => setScreen(planReturnScreen)}
+        onGoHome={() => {
+          setMomentOverlay('none');
+          setScreen('home');
+        }}
+        onOpenMoments={() => setScreen('moment-week')}
+        onOpenAnalysis={() => {
+          setMomentOverlay('agent-analysis');
+          setScreen('moment-week');
+        }}
         onOpenWilo={() => openWilo('plan')}
+      />
+    );
+  } else {
+    content = (
+      <HomePage
+        onOpenMoments={() => {
+          setMomentOverlay('none');
+          setScreen('moment-day');
+        }}
+        onOpenAnalysis={() => {
+          setMomentOverlay('agent-analysis');
+          setScreen('moment-week');
+        }}
+        onOpenPlan={() => {
+          setPlanReturnScreen('home');
+          setMomentOverlay('none');
+          setScreen('plan');
+        }}
+        onOpenWilo={() => openWilo('home')}
       />
     );
   }
 
-  return (
-    <HomePage
-      onOpenMoments={() => {
-        setAnalysisOpen(false);
-        setScreen('moment-day');
-      }}
-      onOpenAnalysis={() => {
-        setAnalysisOpen(true);
-        setScreen('moment-week');
-      }}
-      onOpenWilo={() => openWilo('home')}
-    />
-  );
+  return <div key={`${screen}-${momentOverlay}`} className="screen-stage">{content}</div>;
 }
 
 export default App;

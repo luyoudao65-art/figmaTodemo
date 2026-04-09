@@ -1,7 +1,11 @@
+import { AppBottomDock } from '../components/AppBottomDock';
 import { StatusBar } from './HomePage';
 
 type PlanPageProps = {
   onBack: () => void;
+  onGoHome: () => void;
+  onOpenMoments: () => void;
+  onOpenAnalysis: () => void;
   onOpenWilo: () => void;
 };
 
@@ -58,7 +62,7 @@ const planCards = [
   },
 ];
 
-export function PlanPage({ onBack, onOpenWilo }: PlanPageProps) {
+export function PlanPage({ onBack, onGoHome, onOpenMoments, onOpenAnalysis, onOpenWilo }: PlanPageProps) {
   return (
     <main className="app-shell">
       <section className="phone-frame phone-frame--moments">
@@ -130,16 +134,20 @@ export function PlanPage({ onBack, onOpenWilo }: PlanPageProps) {
               </div>
             </section>
           </div>
-
-          <button type="button" className="wilo-shortcut wilo-shortcut--plan" onClick={onOpenWilo}>
-            <SparkleMiniIcon />
-            <span>Wilo 一下</span>
-          </button>
         </div>
 
         <button type="button" className="page-back-button" onClick={onBack} aria-label="返回">
           <ChevronLeftIcon />
         </button>
+
+        <AppBottomDock
+          className="bottom-area--moments"
+          activeTab="moments"
+          onSelectDaily={onGoHome}
+          onSelectMoments={onOpenMoments}
+          onSelectWilo={onOpenWilo}
+          onOpenAnalysis={onOpenAnalysis}
+        />
       </section>
     </main>
   );
@@ -225,14 +233,6 @@ function FlameIcon() {
   return (
     <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
       <path d="M16 5c2.7 3.1 5.7 6.7 5.7 11.1A5.7 5.7 0 1 1 10.3 16c0-2.8 1.3-5.3 3.6-7.8-.3 4 2.2 5.3 2.2 5.3S17.9 10 16 5z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function SparkleMiniIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="icon icon--tiny" aria-hidden="true">
-      <path d="M10 2.2l1.3 3.6 3.6 1.3-3.6 1.3L10 12l-1.3-3.6L5 7.1l3.7-1.3L10 2.2z" fill="currentColor" />
     </svg>
   );
 }

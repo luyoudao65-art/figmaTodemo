@@ -1,0 +1,30 @@
+---
+description: Code Connect rules for mapping stable reusable Figma components to React components in this repo. Use for `.figma.tsx` or `.figma.js` work, not for page implementation.
+globs: ["src/**/*.figma.tsx", "src/**/*.figma.js", "src/components/**/*.tsx"]
+alwaysApply: false
+---
+
+# Intent
+
+Use Code Connect only for reusable component mapping.
+
+In this repo:
+
+- screen implementation belongs in React page and component files
+- workflow and validation belong in local skill files and repo rules
+- Code Connect belongs only to stable reusable components
+
+# Rules
+
+- Do not create Code Connect files for components in `src/pages/`.
+- Do not map one-off demo sections or temporary page markup.
+- Keep mappings aligned with the real React props and slots.
+- Prefer colocating `.figma.tsx` files with the reusable component they describe.
+- Do not invent props or variants just to mirror Figma.
+- If a component is still unstable, postpone the mapping and keep the screen work in normal React code.
+
+# Validation
+
+- target Figma node is a reusable component or component set
+- target code file is a reusable component, not a page
+- mapping reflects the actual public component API

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { AppBottomDock } from '../components/AppBottomDock';
 
 type GoalCardProps = {
   title: string;
@@ -18,6 +19,7 @@ type TimelineBlockProps = {
 type HomePageProps = {
   onOpenMoments: () => void;
   onOpenAnalysis: () => void;
+  onOpenPlan: () => void;
   onOpenWilo: () => void;
 };
 
@@ -82,7 +84,7 @@ const smartPlanBlocks: TimelineBlockProps[] = [
   },
 ];
 
-export function HomePage({ onOpenMoments, onOpenAnalysis, onOpenWilo }: HomePageProps) {
+export function HomePage({ onOpenMoments, onOpenAnalysis, onOpenPlan, onOpenWilo }: HomePageProps) {
   return (
     <main className="app-shell">
       <section className="phone-frame">
@@ -131,7 +133,7 @@ export function HomePage({ onOpenMoments, onOpenAnalysis, onOpenWilo }: HomePage
               ))}
             </PageSection>
 
-            <PageSection title="智能计划">
+            <PageSection title="智能计划" onOpen={onOpenPlan}>
               <div className="timeline">
                 <div className="timeline__rail" aria-hidden="true">
                   <div className="timeline__line timeline__line--top" />
@@ -147,30 +149,14 @@ export function HomePage({ onOpenMoments, onOpenAnalysis, onOpenWilo }: HomePage
               </div>
             </PageSection>
           </section>
-          <div className="bottom-area bottom-area--embedded">
-            <button type="button" className="analysis-bar" onClick={onOpenAnalysis}>
-              {/* TODO: replace with live agent analysis state when the product logic is defined. */}
-              <span className="analysis-bar__left">
-                <span className="thinking-spin" aria-hidden="true">
-                  <SparkIcon />
-                </span>
-                <span>Agent 正在分析</span>
-              </span>
-              <ChevronRightIcon />
-            </button>
-
-            <div className="bottom-area__nav-row">
-              <BottomNav
-                activeTab="daily"
-                onSelectDaily={() => {}}
-                onSelectMoments={onOpenMoments}
-              />
-              <button type="button" className="wilo-shortcut wilo-shortcut--home" onClick={onOpenWilo}>
-                <SparkIcon />
-                <span>Wilo 一下</span>
-              </button>
-            </div>
-          </div>
+          <AppBottomDock
+            className="bottom-area--embedded"
+            activeTab="daily"
+            onSelectDaily={() => {}}
+            onSelectMoments={onOpenMoments}
+            onSelectWilo={onOpenWilo}
+            onOpenAnalysis={onOpenAnalysis}
+          />
         </div>
       </section>
     </main>
@@ -191,64 +177,36 @@ export function StatusBar({ inverse = false }: { inverse?: boolean }) {
   );
 }
 
-export function BottomNav({
-  activeTab,
-  onSelectDaily,
-  onSelectMoments,
-}: {
-  activeTab: 'daily' | 'moments';
-  onSelectDaily: () => void;
-  onSelectMoments: () => void;
-}) {
-  return (
-    <nav className="bottom-nav" aria-label="Primary">
-      <div className="bottom-nav__group bottom-nav__group--wide">
-        <button
-          type="button"
-          className={`tab${activeTab === 'daily' ? ' tab--active' : ''}`}
-          onClick={onSelectDaily}
-        >
-          <TagIcon />
-          <span>Daily</span>
-        </button>
-        <button
-          type="button"
-          className={`tab${activeTab === 'moments' ? ' tab--active' : ''}`}
-          onClick={onSelectMoments}
-        >
-          <MomentsIcon />
-          <span>Moments</span>
-        </button>
-      </div>
-      <div className="bottom-nav__group">
-        <button type="button" className="tab">
-          <WiloIcon />
-          <span>Wilo</span>
-        </button>
-      </div>
-    </nav>
-  );
-}
-
 function PageSection({
   title,
   subtitle,
   progress,
+  onOpen,
   children,
 }: {
   title: string;
   subtitle?: string;
   progress?: number;
+  onOpen?: () => void;
   children: ReactNode;
 }) {
   return (
     <section className="page-section">
       <header className="page-section__header">
         <div className="page-section__title-group">
-          <div className="page-section__title-row">
-            <h2>{title}</h2>
-            <ChevronRightIcon />
-          </div>
+          {onOpen ? (
+            <button type="button" className="page-section__title-button" onClick={onOpen}>
+              <div className="page-section__title-row">
+                <h2>{title}</h2>
+                <ChevronRightIcon />
+              </div>
+            </button>
+          ) : (
+            <div className="page-section__title-row">
+              <h2>{title}</h2>
+              <ChevronRightIcon />
+            </div>
+          )}
           {subtitle ? (
             <div className="page-section__meta">
               <span>{subtitle}</span>
@@ -382,48 +340,6 @@ function BatteryIcon() {
       <rect x="1" y="1" width="22" height="11" rx="3" fill="none" stroke="currentColor" />
       <rect x="3" y="3" width="16" height="7" rx="2" fill="currentColor" />
       <rect x="24.5" y="4" width="2.5" height="5" rx="1" fill="currentColor" />
-    </svg>
-  );
-}
-
-function SparkIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="icon" aria-hidden="true">
-      <path
-        d="M10 1.5l1.5 4.3 4.3 1.5-4.3 1.5L10 13.1 8.5 8.8 4.2 7.3l4.3-1.5L10 1.5zm-5 9.1l.8 2.3 2.3.8-2.3.8-.8 2.3-.8-2.3-2.3-.8 2.3-.8.8-2.3zm10.2 1.2l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function TagIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <path
-        d="M4 7.5a2.5 2.5 0 0 1 2.5-2.5h5.1c.7 0 1.4.3 1.9.8l5.7 5.7a1.9 1.9 0 0 1 0 2.7l-4 4a1.9 1.9 0 0 1-2.7 0l-5.7-5.7a2.7 2.7 0 0 1-.8-1.9V7.5zm4 .2a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function MomentsIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <rect x="4" y="4" width="16" height="16" rx="3.5" fill="currentColor" opacity="0.35" />
-      <rect x="7" y="7" width="10" height="10" rx="2.5" fill="currentColor" />
-    </svg>
-  );
-}
-
-function WiloIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <path
-        d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7-1.7 4.8-1.7-4.8L5.5 10l4.8-1.7L12 3.5zm6 11.2l.8 2.3 2.3.8-2.3.8-.8 2.3-.8-2.3-2.3-.8 2.3-.8.8-2.3z"
-        fill="currentColor"
-      />
     </svg>
   );
 }

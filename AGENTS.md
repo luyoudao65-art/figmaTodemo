@@ -34,15 +34,40 @@ Do not optimize for generic app structure if it weakens visual fidelity.
 
 # Figma Implementation Workflow
 
+Use this repo's Figma guidance in two distinct lanes:
+
+- `SKILL.md` files define workflow, repo conventions, implementation standards, and validation.
+- Code Connect files such as `*.figma.tsx` or `*.figma.js` should only be introduced for stable reusable components that need design-to-code mapping.
+
+Do not mix those responsibilities.
+
 For every new screen or component derived from Figma:
 
 1. Fetch both design context and screenshot for the exact node.
 2. Identify repeated patterns before writing code.
-3. Reuse existing project pieces where possible.
-4. Match the Figma composition first, then refactor into subcomponents once parity is established.
-5. Validate the result visually against the screenshot before finishing.
+3. Decide whether the task is:
+   - screen implementation or interaction work, which belongs in React code guided by local skills
+   - component mapping work, which belongs in Code Connect files only if the component is reusable and stable
+4. Reuse existing project pieces where possible.
+5. Match the Figma composition first, then refactor into subcomponents once parity is established.
+6. Validate the result visually against the screenshot before finishing.
 
 Treat raw Figma-generated React/Tailwind as a design reference, not as final code.
+
+# Code Connect Boundary
+
+Only create or update Code Connect mappings when all of the following are true:
+
+- the Figma node represents a reusable component or component set
+- the codebase has a real reusable counterpart worth mapping
+- the mapping will help future implementation rather than document one-off page markup
+
+Do not create Code Connect mappings for:
+
+- one-off screens
+- temporary demo-specific page sections
+- unstable markup that is still changing rapidly
+- speculative components that do not exist yet
 
 # Visual Standards
 
@@ -66,6 +91,8 @@ Until the project is deliberately restructured, follow these rules:
 
 - `src/App.tsx` should stay thin and focus on app-level screen switching or routing.
 - `src/pages/` holds screen-level React components.
+- move reusable Figma patterns toward `src/components/` when they stabilize across screens
+- move scenario content or editable demo copy toward data/template files once repetition appears
 - Extract shared pieces when they are used by more than one screen or clearly represent a stable UI pattern.
 - Prefer clear prop-driven components over deeply nested one-off markup.
 

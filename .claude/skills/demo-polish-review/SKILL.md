@@ -17,7 +17,9 @@ Check for:
 - inconsistent navigation behavior
 - static areas that should feel interactive
 - repeated UI that should be extracted
+- repeated content that should become a template or scenario data file
 - comments or TODOs that are missing where logic is unclear
+- one-off page markup that was incorrectly treated as a reusable component mapping
 
 # Review Heuristics
 

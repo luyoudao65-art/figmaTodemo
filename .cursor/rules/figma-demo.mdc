@@ -27,12 +27,15 @@ Prioritize:
 
 - Reuse existing page pieces and repeated UI patterns before creating new one-off structures.
 - Keep `App.tsx` thin and place screen code in `src/pages/`.
+- Use local skill files and repo rules for workflow and validation; do not encode large workflow instructions inside component files.
+- Only create Code Connect mappings for stable reusable components, not for one-off demo screens.
 - Use local state for demo navigation and interaction unless the project outgrows it.
 - Do not invent backend logic.
 - Add short `TODO` comments when real product logic is unclear.
 - Preserve the same tone as the Figma design: soft depth, clean hierarchy, rounded surfaces, and mobile-first composition.
 - Avoid generic design-system defaults that dilute the visual identity.
 - If multiple screens share a stable pattern, extract a subcomponent.
+- If multiple screens share the same content structure, move the editable content into a template/data module instead of duplicating JSX literals.
 - Validate final spacing, typography scale, and tab/entry interactions against the Figma screenshot.
 
 # Required Checks

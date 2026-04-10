@@ -1,6 +1,24 @@
 import type { CSSProperties } from 'react';
-import { AiSparkIcon, AppBottomDock } from '../components/AppBottomDock';
+import { AiSparkIcon, HomeFloatingBar } from '../components/HomeFloatingBar';
+import { WiloAnalysisSheet } from '../components/WiloAnalysisSheet';
 import { StatusBar } from './HomePage';
+
+const dayBubbleAssets = {
+  calmLarge: 'https://www.figma.com/api/mcp/asset/d46bbf88-df7e-43cb-8f89-9a9e8eaefba0',
+  calmSmall: 'https://www.figma.com/api/mcp/asset/d59a057d-4d95-4953-b469-830fd54bafa6',
+  tired: 'https://www.figma.com/api/mcp/asset/b10ca5ab-7db0-4745-a305-5d73031033b2',
+  excited: 'https://www.figma.com/api/mcp/asset/88f29e49-79de-431e-b9fa-ef2a5496996d',
+};
+
+const weekChartAssets = [
+  { day: '一', date: '23', src: 'https://www.figma.com/api/mcp/asset/d40b2356-0dbe-4377-8b8c-484a2efafce5' },
+  { day: '二', date: '24', src: 'https://www.figma.com/api/mcp/asset/0f7e4157-f539-4334-bc6a-6d0b94aeec0c' },
+  { day: '三', date: '25', src: 'https://www.figma.com/api/mcp/asset/efe05c9a-e3aa-4492-8287-6b1399988861' },
+  { day: '四', date: '26', src: 'https://www.figma.com/api/mcp/asset/105f6c91-46f9-41ca-a2e7-f401296a914f' },
+  { day: '五', date: '27', src: 'https://www.figma.com/api/mcp/asset/5230ecbf-7ca1-4b9b-8d02-49033a5ed934' },
+  { day: '六', date: '28', src: 'https://www.figma.com/api/mcp/asset/2c3180ae-6910-4286-beab-d98220e1a2b5' },
+  { day: '日', date: '29' },
+];
 
 type MomentPageProps = {
   mode: 'day' | 'week' | 'month';
@@ -9,6 +27,7 @@ type MomentPageProps = {
   onOpenDay: () => void;
   onOpenWeek: () => void;
   onOpenMonth: () => void;
+  onOpenPlan: () => void;
   onOpenWiloSuggest: () => void;
   onOpenAgentAnalysis: () => void;
   onCloseOverlay: () => void;
@@ -36,53 +55,51 @@ const dayBubbles = [
   {
     emotion: '平静',
     time: '0:00 - 6:10',
-    top: 0,
-    left: 216,
-    size: 160,
-    background:
-      'radial-gradient(circle at 34% 30%, rgba(255,255,255,0.98), rgba(227,237,252,0.98) 38%, rgba(203,221,247,0.96) 72%, rgba(215,228,246,0.84) 100%)',
+    top: 8,
+    left: 192,
+    width: 167,
+    height: 157,
+    image: dayBubbleAssets.calmLarge,
     textColor: '#4C87DA',
+    titleSize: 17,
+    timeSize: 15,
   },
   {
     emotion: '疲惫',
     time: '22:10 -22:40',
-    top: 158,
-    left: 64,
-    size: 106,
-    background:
-      'radial-gradient(circle at 34% 30%, rgba(255,255,255,0.98), rgba(244,245,244,0.98) 42%, rgba(226,231,230,0.95) 74%, rgba(233,236,235,0.84) 100%)',
+    top: 181,
+    left: 36,
+    width: 113,
+    height: 106,
+    image: dayBubbleAssets.tired,
     textColor: '#242A29',
+    titleSize: 17,
+    timeSize: 11,
   },
   {
     emotion: '兴奋',
     time: '10:10 - 12:10',
-    top: 255,
-    left: 212,
-    size: 108,
-    background:
-      'radial-gradient(circle at 34% 30%, rgba(255,255,255,0.98), rgba(220,248,223,0.98) 42%, rgba(174,235,184,0.96) 74%, rgba(202,244,206,0.82) 100%)',
+    top: 286,
+    left: 200,
+    width: 114,
+    height: 107,
+    image: dayBubbleAssets.excited,
     textColor: '#2A853B',
+    titleSize: 17,
+    timeSize: 11,
   },
   {
     emotion: '平静',
     time: '15:10-15:50',
-    top: 359,
-    left: 103,
-    size: 104,
-    background:
-      'radial-gradient(circle at 34% 30%, rgba(255,255,255,0.98), rgba(227,237,252,0.98) 38%, rgba(203,221,247,0.96) 72%, rgba(215,228,246,0.84) 100%)',
+    top: 395,
+    left: 73,
+    width: 110,
+    height: 103,
+    image: dayBubbleAssets.calmSmall,
     textColor: '#4C87DA',
+    titleSize: 15,
+    timeSize: 11,
   },
-];
-
-const periodDays = [
-  { label: '一', date: '23', gap: 115, top: { tone: 'calm', size: 'tall' }, bottom: { tone: 'calm', size: 'dot' } },
-  { label: '二', date: '24', gap: 100, top: { tone: 'calm', size: 'tall' }, bottom: { tone: 'anxious', size: 'dot' } },
-  { label: '三', date: '25', gap: 89, top: { tone: 'calm', size: 'tall' }, bottom: { tone: 'calm', size: 'dot' } },
-  { label: '四', date: '26', gap: 107, top: { tone: 'calm', size: 'tall-lg' }, bottom: { tone: 'neutral', size: 'pill' } },
-  { label: '五', date: '27', gap: 164, top: { tone: 'calm', size: 'tall-lg' }, bottom: { tone: 'excited', size: 'x-tall' } },
-  { label: '六', date: '28', gap: 81, top: { tone: 'calm', size: 'tall' }, bottom: { tone: 'anxious', size: 'x-tall' } },
-  { label: '日', date: '29', top: null, bottom: null },
 ];
 
 export function MomentPage({
@@ -92,6 +109,7 @@ export function MomentPage({
   onOpenDay,
   onOpenWeek,
   onOpenMonth: _onOpenMonth,
+  onOpenPlan,
   onOpenWiloSuggest,
   onOpenAgentAnalysis,
   onCloseOverlay,
@@ -153,6 +171,7 @@ export function MomentPage({
 
                   <p className="moment-summary__text moment-summary__text--week">
                     本周身心处于一种高代谢、高反应性的模式，既是挑战（易引发情绪化进食、睡眠差），也是机会（高兴奋度可转化为运动动力）
+                    <InlineSparkDot />
                   </p>
 
                   <button type="button" className="moment-summary__cta" onClick={onOpenWiloSuggest}>
@@ -163,12 +182,12 @@ export function MomentPage({
 
                 <section className="period-grid">
                   <div className="period-grid__labels">
-                    {periodDays.map((day) => (
-                      <span key={day.label}>{day.label}</span>
+                    {weekChartAssets.map((day) => (
+                      <span key={day.day}>{day.day}</span>
                     ))}
                   </div>
                   <div className="period-grid__dates">
-                    {periodDays.map((day) => (
+                    {weekChartAssets.map((day) => (
                       <span key={day.date}>{day.date}</span>
                     ))}
                   </div>
@@ -185,21 +204,12 @@ export function MomentPage({
                     </div>
 
                     <div className="period-grid__columns">
-                      {periodDays.map((day) => (
-                        <div key={`${day.label}-${day.date}`} className="period-grid__column">
-                          {day.top ? (
-                            <div className="period-grid__stack" style={{ gap: `${day.gap}px` }}>
-                              <span
-                                className={`period-shape period-shape--${day.top.tone} period-shape--${day.top.size} period-shape--top`}
-                              />
-                              {day.bottom ? (
-                                <span
-                                  className={`period-shape period-shape--${day.bottom.tone} period-shape--${day.bottom.size} period-shape--bottom`}
-                                />
-                              ) : null}
-                            </div>
+                      {weekChartAssets.map((day) => (
+                        <div key={`${day.day}-${day.date}`} className="period-grid__column">
+                          {day.src ? (
+                            <img className="period-grid__day-art" src={day.src} alt="" />
                           ) : (
-                            <span className="period-shape period-shape--empty" />
+                            <span className="period-grid__day-art period-grid__day-art--empty" />
                           )}
                         </div>
                       ))}
@@ -221,6 +231,7 @@ export function MomentPage({
 
                   <p className="moment-summary__text moment-summary__text--week">
                     本月情绪波动整体可控，建议继续保持节律稳定，把高兴奋时段转化为运动与专注窗口。
+                    <InlineSparkDot />
                   </p>
 
                   <button type="button" className="moment-summary__cta" onClick={onOpenWiloSuggest}>
@@ -271,6 +282,7 @@ export function MomentPage({
 
                   <p className="moment-summary__text">
                     当前处于一个“稳定但能量有待激活”的理想平衡状态。这是一个高效执行健康计划的黄金窗口期。
+                    <InlineSparkDot />
                   </p>
 
                   <button type="button" className="moment-summary__cta" onClick={onOpenWiloSuggest}>
@@ -298,12 +310,14 @@ export function MomentPage({
                         style={{
                           top: bubble.top,
                           left: bubble.left,
-                          width: bubble.size,
-                          height: bubble.size,
-                          background: bubble.background,
+                          width: bubble.width,
+                          height: bubble.height,
                           color: bubble.textColor,
-                        }}
+                          '--moment-bubble-title-size': `${bubble.titleSize}px`,
+                          '--moment-bubble-time-size': `${bubble.timeSize}px`,
+                        } as CSSProperties}
                       >
+                        <img className="moment-bubble__skin" src={bubble.image} alt="" />
                         <strong>{bubble.emotion}</strong>
                         <span>{bubble.time}</span>
                       </article>
@@ -315,116 +329,28 @@ export function MomentPage({
           </div>
         </div>
 
-        {isWiloSuggestOpen || isAgentAnalysisOpen ? (
-          <>
-            <button
-              type="button"
-              className="analysis-overlay"
-              aria-label="关闭分析面板"
-              onClick={onCloseOverlay}
-            />
-            <section className="analysis-sheet">
-              <div className="analysis-sheet__content">
-                <div className="analysis-sheet__title-row">
-                  <h2>Wilo 分析中</h2>
-                  <AiSparkIcon className="icon analysis-sheet__title-icon" />
-                </div>
-
-                {isWiloSuggestOpen ? (
-                  <>
-                    <div className="analysis-sheet__header">
-                      <p className="analysis-sheet__thinking-time">已思考 3s</p>
-                      <p>根据我目前整合的数据（运动记录、心率及周围环境等）：</p>
-                      <p>建议今晚10:30后远离蓝光快速入睡，巩固今日成果。</p>
-                    </div>
-
-                    <div className="analysis-sheet__section">
-                      <p className="analysis-sheet__label">增加今日计划</p>
-                      <div className="analysis-card">
-                        <div className="analysis-card__row">
-                          <div className="analysis-card__icon" aria-hidden="true">
-                            <PhoneMuteIcon />
-                          </div>
-                          <div className="analysis-card__text">
-                            <h3>远离手机</h3>
-                            <p>晚10:30后无法打开除必要通讯工作软件外其他软件</p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          className="moment-summary__cta analysis-card__cta"
-                          onClick={onConfirmPlan}
-                        >
-                          <AiSparkIcon className="icon icon--sparkle-outline" />
-                          <span>确认计划</span>
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="analysis-sheet__chat-bubble">
-                      <p>你好，Wilo。我现在感觉有些头晕，而且注意力不太集中</p>
-                    </div>
-
-                    <div className="analysis-sheet__header">
-                      <p className="analysis-sheet__thinking-time">已思考 3s</p>
-                      <p>根据我目前整合的数据（饮食记录、心率及周围环境等）：</p>
-                      <p>◎你的血糖在 12:30的高碳水午餐后目前正处于下降区间。</p>
-                      <p>◎当前室内湿度为28%，属于极度干燥，这可能加速了轻微脱水。</p>
-                    </div>
-
-                    <div className="analysis-sheet__section">
-                      <p className="analysis-sheet__label">建议动作</p>
-                      <div className="analysis-card">
-                        <div className="analysis-card__row">
-                          <div className="analysis-card__icon" aria-hidden="true">
-                            <PhoneMuteIcon />
-                          </div>
-                          <div className="analysis-card__text">
-                            <h3>活动一下</h3>
-                            <p>饮用300ml 柠檬水。我会为你开启5分钟的“脑波调节”背景音乐。</p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          className="moment-summary__cta analysis-card__cta analysis-card__cta--plain"
-                          onClick={onOpenWilo}
-                        >
-                          <span>Wilo 一下</span>
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div className="analysis-input-bar">
-                <button type="button" className="analysis-input-bar__icon">
-                  <GalleryIcon />
-                </button>
-                <div className="analysis-input-bar__field">
-                  <span>输入你的身体感受</span>
-                </div>
-                <button type="button" className="analysis-input-bar__icon">
-                  <MicIcon />
-                </button>
-              </div>
-            </section>
-          </>
+        {isWiloSuggestOpen ? (
+          <WiloAnalysisSheet variant="suggest" onClose={onCloseOverlay} onPrimaryAction={onConfirmPlan} />
         ) : null}
 
-        <AppBottomDock
-          className="bottom-area--moments"
-          activeTab="moments"
-          onSelectDaily={onGoHome}
-          onSelectMoments={() => {}}
-          onSelectWilo={onOpenWilo}
+        {isAgentAnalysisOpen ? (
+          <WiloAnalysisSheet variant="agent" onClose={onCloseOverlay} onPrimaryAction={onOpenWilo} />
+        ) : null}
+
+        <HomeFloatingBar
+          className="home-floating-bar--moments"
+          onCenterClick={onOpenWilo}
           onOpenAnalysis={onOpenAgentAnalysis}
+          leftTab={{ label: '主页', icon: 'home', onClick: onGoHome }}
+          rightTab={{ label: '计划', icon: 'plan', onClick: onOpenPlan }}
         />
       </section>
     </main>
   );
+}
+
+function InlineSparkDot() {
+  return <span className="inline-spark-dot" aria-hidden="true" />;
 }
 
 function WeekEnergyBar() {
@@ -449,33 +375,5 @@ function WeekEnergyBar() {
         </div>
       ))}
     </div>
-  );
-}
-
-function PhoneMuteIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M11 18h2" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function GalleryIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="9" cy="10" r="1.6" fill="currentColor" />
-      <path d="M6.5 17l4.2-4.2 2.8 2.8 2.7-2.7 1.3 1.3" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function MicIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M6.5 11.5a5.5 5.5 0 0 0 11 0M12 17v4M9 21h6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-    </svg>
   );
 }

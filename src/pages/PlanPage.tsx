@@ -1,10 +1,20 @@
-import { AppBottomDock } from '../components/AppBottomDock';
+import { HomeFloatingBar } from '../components/HomeFloatingBar';
+import {
+  FragmentExerciseIcon,
+  InflammationWarningActionIcon,
+  InflammationWarningIcon,
+  MealAdviceActionIcon,
+  MealAdviceIcon,
+  PhoneLimitActionIcon,
+  PhoneLimitIcon,
+  TargetPlanActionIcon,
+  TargetPlanIcon,
+} from '../components/FeatureIcons';
 import { StatusBar } from './HomePage';
 
 type PlanPageProps = {
   onBack: () => void;
   onGoHome: () => void;
-  onOpenMoments: () => void;
   onOpenAnalysis: () => void;
   onOpenWilo: () => void;
 };
@@ -16,7 +26,7 @@ const planCards = [
     section: '14:00-15:00 进行中',
     title: '碎片化运动',
     description: '建议立即接受5–10分钟的自然光照射（靠近窗户或短时户外）',
-    icon: <StretchIcon />,
+    icon: <FragmentExerciseIcon />,
     trailing: <CircleIcon />,
   },
   {
@@ -24,14 +34,14 @@ const planCards = [
     title: '餐饮建议',
     description:
       '计划今晚19点运动，建议在晚餐中包含一份复合碳水（如全麦面包），为训练供能',
-    icon: <CutleryIcon />,
-    trailing: <PendingIcon />,
+    icon: <MealAdviceIcon />,
+    trailing: <MealAdviceActionIcon />,
   },
   {
     title: '目标计划',
     description: '篮球运动一个小时',
-    icon: <TargetIcon />,
-    trailing: <PendingIcon />,
+    icon: <TargetPlanIcon />,
+    trailing: <TargetPlanActionIcon />,
     footer: (
       <button type="button" className="goal-inline-action">
         <span>Skills 自动下单外卖</span>
@@ -45,11 +55,11 @@ const planCards = [
   {
     title: '远离手机',
     description: '晚10:30后无法打开除必要通讯工作软件外其他软件',
-    icon: <PhoneMuteIcon />,
+    icon: <PhoneLimitIcon />,
     trailing: (
       <span className="plan-card__alert-wrap">
         <span className="plan-card__alert-dot" />
-        <PendingIcon />
+        <PhoneLimitActionIcon />
       </span>
     ),
   },
@@ -57,12 +67,12 @@ const planCards = [
     section: '已完成',
     title: '炎症预警',
     description: '已智能调整接下来10天饮食建议：增加深海鱼，减少糖分',
-    icon: <FlameIcon />,
-    trailing: <DoneGreenIcon />,
+    icon: <InflammationWarningIcon />,
+    trailing: <InflammationWarningActionIcon />,
   },
 ];
 
-export function PlanPage({ onBack, onGoHome, onOpenMoments, onOpenAnalysis, onOpenWilo }: PlanPageProps) {
+export function PlanPage({ onBack, onGoHome, onOpenAnalysis, onOpenWilo }: PlanPageProps) {
   return (
     <main className="app-shell">
       <section className="phone-frame phone-frame--moments">
@@ -140,13 +150,12 @@ export function PlanPage({ onBack, onGoHome, onOpenMoments, onOpenAnalysis, onOp
           <ChevronLeftIcon />
         </button>
 
-        <AppBottomDock
-          className="bottom-area--moments"
-          activeTab="moments"
-          onSelectDaily={onGoHome}
-          onSelectMoments={onOpenMoments}
-          onSelectWilo={onOpenWilo}
+        <HomeFloatingBar
+          className="home-floating-bar--moments"
+          onCenterClick={onOpenWilo}
           onOpenAnalysis={onOpenAnalysis}
+          leftTab={{ label: '主页', icon: 'home', onClick: onGoHome }}
+          rightTab={{ label: '计划', icon: 'plan', active: true }}
         />
       </section>
     </main>
@@ -173,66 +182,6 @@ function CircleIcon() {
   return (
     <svg viewBox="0 0 28 28" className="icon" aria-hidden="true">
       <circle cx="14" cy="14" r="11.5" fill="none" stroke="#AFB7B6" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function PendingIcon() {
-  return (
-    <svg viewBox="0 0 28 28" className="icon" aria-hidden="true">
-      <path d="M14 6.5v7l4.5 3.2" fill="none" stroke="#F0BE5E" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-      <circle cx="14" cy="14" r="9.5" fill="none" stroke="#F0BE5E" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function DoneGreenIcon() {
-  return (
-    <svg viewBox="0 0 28 28" className="icon" aria-hidden="true">
-      <circle cx="14" cy="14" r="11" fill="none" stroke="#3ED05A" strokeWidth="2" />
-      <path d="M9.3 14.2l3.1 3.1 6.2-6.6" fill="none" stroke="#3ED05A" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function StretchIcon() {
-  return (
-    <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
-      <path d="M16 6c2.6 0 4.8 2.2 4.8 4.8S18.6 15.6 16 15.6s-4.8-2.2-4.8-4.8S13.4 6 16 6zm-6.5 19.2l2.3-5.6 4.2-1.9 4.2 1.9 2.3 5.6m-12.5-4.1h12.5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function CutleryIcon() {
-  return (
-    <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
-      <path d="M9 5v8m3-8v8m-6-8v8a3 3 0 0 0 3 3v11m10-22v12m0 0c-2.8 0-5-2.2-5-5V5m5 12c2.8 0 5-2.2 5-5V5m0 22V5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function TargetIcon() {
-  return (
-    <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
-      <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M5 16h22M16 5v22" fill="none" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function PhoneMuteIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M11 18h2" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function FlameIcon() {
-  return (
-    <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
-      <path d="M16 5c2.7 3.1 5.7 6.7 5.7 11.1A5.7 5.7 0 1 1 10.3 16c0-2.8 1.3-5.3 3.6-7.8-.3 4 2.2 5.3 2.2 5.3S17.9 10 16 5z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
     </svg>
   );
 }

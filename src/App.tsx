@@ -6,12 +6,14 @@ import { WiloPage } from './pages/WiloPage';
 
 type Screen = 'home' | 'moment-day' | 'moment-week' | 'moment-month' | 'plan' | 'wilo';
 type MomentOverlay = 'none' | 'wilo-suggest' | 'agent-analysis';
+type HomeOverlay = 'none' | 'goal-analysis';
 
 function App() {
   const [screen, setScreen] = useState<Screen>('home');
   const [momentOverlay, setMomentOverlay] = useState<MomentOverlay>('none');
+  const [homeOverlay, setHomeOverlay] = useState<HomeOverlay>('none');
   const [returnScreen, setReturnScreen] = useState<Exclude<Screen, 'wilo'>>('home');
-  const [planReturnScreen, setPlanReturnScreen] = useState<'home' | 'moment-week'>('moment-week');
+  const [planReturnScreen, setPlanReturnScreen] = useState<'home' | 'moment-day' | 'moment-week'>('moment-week');
 
   const openWilo = (from: Exclude<Screen, 'wilo'>) => {
     setReturnScreen(from);
@@ -28,6 +30,7 @@ function App() {
         mode="day"
         onGoHome={() => {
           setMomentOverlay('none');
+          setHomeOverlay('none');
           setScreen('home');
         }}
         onOpenDay={() => setScreen('moment-day')}
@@ -36,6 +39,11 @@ function App() {
         onOpenWiloSuggest={() => {
           setScreen('moment-week');
           setMomentOverlay('wilo-suggest');
+        }}
+        onOpenPlan={() => {
+          setMomentOverlay('none');
+          setPlanReturnScreen('moment-day');
+          setScreen('plan');
         }}
         onOpenAgentAnalysis={() => {
           setScreen('moment-week');
@@ -57,6 +65,7 @@ function App() {
         overlay={momentOverlay}
         onGoHome={() => {
           setMomentOverlay('none');
+          setHomeOverlay('none');
           setScreen('home');
         }}
         onOpenDay={() => {
@@ -65,6 +74,11 @@ function App() {
         }}
         onOpenWeek={() => setScreen('moment-week')}
         onOpenMonth={() => setScreen('moment-month')}
+        onOpenPlan={() => {
+          setMomentOverlay('none');
+          setPlanReturnScreen('moment-week');
+          setScreen('plan');
+        }}
         onOpenWiloSuggest={() => setMomentOverlay('wilo-suggest')}
         onOpenAgentAnalysis={() => setMomentOverlay('agent-analysis')}
         onCloseOverlay={() => setMomentOverlay('none')}
@@ -83,6 +97,7 @@ function App() {
         overlay={momentOverlay}
         onGoHome={() => {
           setMomentOverlay('none');
+          setHomeOverlay('none');
           setScreen('home');
         }}
         onOpenDay={() => {
@@ -94,6 +109,11 @@ function App() {
           setScreen('moment-week');
         }}
         onOpenMonth={() => setScreen('moment-month')}
+        onOpenPlan={() => {
+          setMomentOverlay('none');
+          setPlanReturnScreen('moment-week');
+          setScreen('plan');
+        }}
         onOpenWiloSuggest={() => setMomentOverlay('wilo-suggest')}
         onOpenAgentAnalysis={() => setMomentOverlay('agent-analysis')}
         onCloseOverlay={() => setMomentOverlay('none')}
@@ -111,9 +131,9 @@ function App() {
         onBack={() => setScreen(planReturnScreen)}
         onGoHome={() => {
           setMomentOverlay('none');
+          setHomeOverlay('none');
           setScreen('home');
         }}
-        onOpenMoments={() => setScreen('moment-week')}
         onOpenAnalysis={() => {
           setMomentOverlay('agent-analysis');
           setScreen('moment-week');
@@ -125,19 +145,23 @@ function App() {
     content = (
       <HomePage
         onOpenMoments={() => {
+          setHomeOverlay('none');
           setMomentOverlay('none');
           setScreen('moment-day');
         }}
-        onOpenAnalysis={() => {
-          setMomentOverlay('agent-analysis');
-          setScreen('moment-week');
-        }}
         onOpenPlan={() => {
+          setHomeOverlay('none');
           setPlanReturnScreen('home');
           setMomentOverlay('none');
           setScreen('plan');
         }}
-        onOpenWilo={() => openWilo('home')}
+        onOpenGoalAnalysis={() => setHomeOverlay('goal-analysis')}
+        goalAnalysisOpen={homeOverlay === 'goal-analysis'}
+        onCloseGoalAnalysis={() => setHomeOverlay('none')}
+        onOpenWilo={() => {
+          setHomeOverlay('none');
+          openWilo('home');
+        }}
       />
     );
   }

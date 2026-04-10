@@ -1,5 +1,21 @@
 import type { ReactNode } from 'react';
-import { AppBottomDock } from '../components/AppBottomDock';
+import { HomeFloatingBar } from '../components/HomeFloatingBar';
+import {
+  FragmentExerciseIcon,
+  InflammationWarningIcon,
+  MealAdviceIcon,
+  TargetPlanIcon,
+} from '../components/FeatureIcons';
+import { WiloAnalysisSheet } from '../components/WiloAnalysisSheet';
+
+const heroOrbitAssets = {
+  ring: 'https://www.figma.com/api/mcp/asset/ee958f2a-e3de-473a-b7bd-773226995a0b',
+  yellow: 'https://www.figma.com/api/mcp/asset/63bcf1c0-3ef9-4070-bcad-be6e15cdd26e',
+  blue: 'https://www.figma.com/api/mcp/asset/77717068-e76d-4bf0-af75-3a171980fb1f',
+  mint: 'https://www.figma.com/api/mcp/asset/419083ed-f314-4228-8a8c-bec191725b0d',
+  gray: 'https://www.figma.com/api/mcp/asset/c0779061-d7f5-4258-a2df-f1fa9971adfc',
+  peach: 'https://www.figma.com/api/mcp/asset/7236d07e-e222-49ac-a0df-0a017e9cc95b',
+};
 
 type GoalCardProps = {
   title: string;
@@ -18,23 +34,18 @@ type TimelineBlockProps = {
 
 type HomePageProps = {
   onOpenMoments: () => void;
-  onOpenAnalysis: () => void;
   onOpenPlan: () => void;
   onOpenWilo: () => void;
+  onOpenGoalAnalysis: () => void;
+  goalAnalysisOpen?: boolean;
+  onCloseGoalAnalysis: () => void;
 };
-
-const heroImage =
-  'https://www.figma.com/api/mcp/asset/fb9eb749-8657-4298-892d-427ce1a00767';
-const emotionMomentsImage =
-  'https://www.figma.com/api/mcp/asset/ca95adec-41d9-46a0-b006-49871f0792be';
-const goalCoverImage =
-  'https://www.figma.com/api/mcp/asset/75448ff3-6938-4712-be1a-0cf02c6f1d36';
 
 const currentGoals: GoalCardProps[] = [
   {
-    title: '篮球运动1小时',
-    description: '19:00–20:00',
-    icon: <PhotoIcon src={goalCoverImage} alt="" />,
+    title: '目标计划',
+    description: '提前15分钟开始准备睡觉，原来习惯23:30睡，今天调整到23:15',
+    icon: <TargetPlanIcon />,
     trailing: <CircleActionIcon />,
   },
 ];
@@ -48,7 +59,7 @@ const smartPlanBlocks: TimelineBlockProps[] = [
         title: '碎片化运动',
         description:
           '建议立即接受5-10分钟的自然光照射（靠近窗户或短时户外）',
-        icon: <StretchIcon />,
+        icon: <FragmentExerciseIcon />,
         trailing: <CircleActionIcon />,
       },
     ],
@@ -60,13 +71,13 @@ const smartPlanBlocks: TimelineBlockProps[] = [
       {
         title: '炎症预警',
         description: '已智能调整接下来10天饮食建议：增加深海鱼，减少糖分',
-        icon: <ShieldLeafIcon />,
+        icon: <InflammationWarningIcon />,
         trailing: <CheckIcon />,
       },
       {
         title: '饮食推荐',
         description: '午餐：“超级碗”的鳕鱼谷物碗',
-        icon: <CutleryIcon />,
+        icon: <MealAdviceIcon />,
         trailing: <CheckIcon />,
         muted: true,
         actionRow: (
@@ -84,28 +95,63 @@ const smartPlanBlocks: TimelineBlockProps[] = [
   },
 ];
 
-export function HomePage({ onOpenMoments, onOpenAnalysis, onOpenPlan, onOpenWilo }: HomePageProps) {
+export function HomePage({
+  onOpenMoments,
+  onOpenPlan,
+  onOpenWilo,
+  onOpenGoalAnalysis,
+  goalAnalysisOpen = false,
+  onCloseGoalAnalysis,
+}: HomePageProps) {
   return (
     <main className="app-shell">
       <section className="phone-frame">
         <div className="phone-scroll phone-scroll--home">
           <button
             type="button"
-            className="hero hero--interactive"
+            className="hero hero--interactive hero--energy"
             onClick={onOpenMoments}
             aria-label="打开 Moments 页面"
           >
-            <img className="hero__image" src={heroImage} alt="" />
-            <div className="hero__shade" />
-            <StatusBar inverse />
+            <StatusBar />
 
-            <div className="hero__content">
-              <div>
-                <h1 className="hero__title">活力在线</h1>
-              </div>
-              <div className="emotion-strip">
-                <p className="emotion-strip__label">情绪瞬间</p>
-                <img className="emotion-strip__image" src={emotionMomentsImage} alt="" />
+            <div className="hero__content hero__content--energy">
+              <div className="energy-orbit" aria-hidden="true">
+                <div className="energy-orbit__dust" />
+                <img
+                  src={heroOrbitAssets.ring}
+                  alt=""
+                  className="energy-orbit__asset energy-orbit__asset--ring"
+                />
+                <img
+                  src={heroOrbitAssets.yellow}
+                  alt=""
+                  className="energy-orbit__asset energy-orbit__asset--yellow"
+                />
+                <img
+                  src={heroOrbitAssets.blue}
+                  alt=""
+                  className="energy-orbit__asset energy-orbit__asset--blue"
+                />
+                <img
+                  src={heroOrbitAssets.mint}
+                  alt=""
+                  className="energy-orbit__asset energy-orbit__asset--mint"
+                />
+                <img
+                  src={heroOrbitAssets.gray}
+                  alt=""
+                  className="energy-orbit__asset energy-orbit__asset--gray"
+                />
+                <img
+                  src={heroOrbitAssets.peach}
+                  alt=""
+                  className="energy-orbit__asset energy-orbit__asset--peach"
+                />
+                <div className="energy-orbit__focus">
+                  <span>活力</span>
+                  <span>在线</span>
+                </div>
               </div>
             </div>
           </button>
@@ -115,20 +161,12 @@ export function HomePage({ onOpenMoments, onOpenAnalysis, onOpenPlan, onOpenWilo
               title="我的目标"
               subtitle="减重/连续 1 天"
               progress={0.12}
+              onOpen={onOpenGoalAnalysis}
             >
               {currentGoals.map((goal) => (
                 <GoalCard
                   key={goal.title}
                   {...goal}
-                  actionRow={
-                    <button type="button" className="goal-inline-action" onClick={onOpenWilo}>
-                      <span>开启5分钟的“脑波调节”背景音乐</span>
-                      <span className="goal-inline-action__hint">
-                        Wilo 一下
-                        <ChevronRightIcon />
-                      </span>
-                    </button>
-                  }
                 />
               ))}
             </PageSection>
@@ -149,15 +187,16 @@ export function HomePage({ onOpenMoments, onOpenAnalysis, onOpenPlan, onOpenWilo
               </div>
             </PageSection>
           </section>
-          <AppBottomDock
-            className="bottom-area--embedded"
-            activeTab="daily"
-            onSelectDaily={() => {}}
-            onSelectMoments={onOpenMoments}
-            onSelectWilo={onOpenWilo}
-            onOpenAnalysis={onOpenAnalysis}
-          />
         </div>
+        <HomeFloatingBar onCenterClick={onOpenWilo} rightTab={{ label: '计划', icon: 'plan', onClick: onOpenPlan }} />
+
+        {goalAnalysisOpen ? (
+          <WiloAnalysisSheet
+            variant="chat-demo"
+            onClose={onCloseGoalAnalysis}
+            onPrimaryAction={onOpenWilo}
+          />
+        ) : null}
       </section>
     </main>
   );
@@ -342,53 +381,4 @@ function BatteryIcon() {
       <rect x="24.5" y="4" width="2.5" height="5" rx="1" fill="currentColor" />
     </svg>
   );
-}
-
-function CutleryIcon() {
-  return (
-    <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
-      <path
-        d="M9 5v8m3-8v8m-6-8v8a3 3 0 0 0 3 3v11m10-22v12m0 0c-2.8 0-5-2.2-5-5V5m5 12c2.8 0 5-2.2 5-5V5m0 22V5"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function StretchIcon() {
-  return (
-    <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
-      <path
-        d="M16 6c2.6 0 4.8 2.2 4.8 4.8S18.6 15.6 16 15.6s-4.8-2.2-4.8-4.8S13.4 6 16 6zm-6.5 19.2l2.3-5.6 4.2-1.9 4.2 1.9 2.3 5.6m-12.5-4.1h12.5"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function ShieldLeafIcon() {
-  return (
-    <svg viewBox="0 0 32 32" className="icon icon--feature" aria-hidden="true">
-      <path
-        d="M16 4l8 3.2v6.4c0 6.3-3.4 10.4-8 13.4-4.6-3-8-7.1-8-13.4V7.2L16 4zm-3.8 14.1c1.8-3.9 5.5-6.4 9.6-6.8-1 4.6-4.1 8.1-8.5 9.3m1.2-4.5c1.2 0 2.2.3 3.3.8"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function PhotoIcon({ src, alt }: { src: string; alt: string }) {
-  return <img className="goal-photo-icon" src={src} alt={alt} />;
 }

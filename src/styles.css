@@ -22,6 +22,8 @@
   --radius-pill: 999px;
   --frame-width: 390px;
   --frame-height: 844px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 * {
@@ -43,7 +45,7 @@ button {
 }
 
 .app-shell {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   place-items: center;
   padding: 16px;
@@ -51,7 +53,8 @@ button {
 
 .phone-frame {
   position: relative;
-  width: var(--frame-width);
+  width: min(100%, var(--frame-width));
+  height: var(--frame-height);
   min-height: var(--frame-height);
   overflow: hidden;
   background: var(--sheet-bg);
@@ -59,7 +62,7 @@ button {
 }
 
 .phone-scroll {
-  height: var(--frame-height);
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -73,20 +76,20 @@ button {
 }
 
 .phone-scroll--home {
-  padding-bottom: 0;
+  padding-bottom: calc(120px + var(--safe-bottom));
   background: #fafafa;
 }
 
 .phone-scroll--moments-week {
-  padding-bottom: 136px;
+  padding-bottom: calc(136px + var(--safe-bottom));
 }
 
 .phone-scroll--plan {
-  padding-bottom: 136px;
+  padding-bottom: calc(136px + var(--safe-bottom));
 }
 
 .phone-scroll--wilo {
-  padding-bottom: 48px;
+  padding-bottom: calc(48px + var(--safe-bottom));
 }
 
 .phone-frame--moments {
@@ -144,7 +147,7 @@ button {
   grid-template-columns: 1fr 125px 1fr;
   align-items: center;
   gap: 6px;
-  padding: 11px 16px;
+  padding: calc(11px + var(--safe-top)) 16px 11px;
   color: var(--text-primary);
 }
 
@@ -342,7 +345,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  padding: 24px 24px 168px;
+  padding: 24px 24px calc(168px + var(--safe-bottom));
   background: #fafafa;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
@@ -352,7 +355,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px 24px 24px;
+  padding: 8px 24px calc(24px + var(--safe-bottom));
   background:
     linear-gradient(180deg, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 0.9) 24%, #fafafa 60%);
 }
@@ -1222,17 +1225,28 @@ button {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: calc(100% - 72px - var(--safe-top));
   min-height: 618px;
   padding: 24px 24px 132px;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   background: var(--sheet-bg);
+  overflow: hidden;
 }
 
 .analysis-sheet__content {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+
+.analysis-sheet__content::-webkit-scrollbar {
+  display: none;
 }
 
 .analysis-sheet__title-row {
@@ -1918,8 +1932,228 @@ button {
 
   .phone-frame {
     width: 100%;
-    min-height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
     border-radius: 0;
+  }
+
+  .hero--energy {
+    height: 412px;
+  }
+
+  .hero__content--energy {
+    padding: 34px 16px 10px;
+  }
+
+  .energy-orbit {
+    width: 316px;
+    height: 286px;
+    margin-top: 8px;
+    transform: none;
+  }
+
+  .energy-orbit__asset--ring {
+    left: 84px;
+    top: 18px;
+    width: 228px;
+    height: 228px;
+  }
+
+  .energy-orbit__asset--yellow {
+    left: 134px;
+    top: 10px;
+  }
+
+  .energy-orbit__asset--blue {
+    left: 214px;
+    top: 10px;
+  }
+
+  .energy-orbit__asset--mint {
+    left: 280px;
+    top: 60px;
+  }
+
+  .energy-orbit__asset--gray {
+    left: 292px;
+    top: 146px;
+  }
+
+  .energy-orbit__asset--peach {
+    left: 258px;
+    top: 214px;
+  }
+
+  .energy-orbit__focus {
+    left: 52px;
+    top: 160px;
+  }
+
+  .moment-page {
+    padding: 14px 12px 132px;
+  }
+
+  .moment-page__header {
+    padding: 0 2px;
+  }
+
+  .moment-page__switcher {
+    gap: 18px;
+  }
+
+  .moment-summary {
+    margin-top: 14px;
+    padding: 14px;
+  }
+
+  .moment-summary__top strong,
+  .moment-summary__title-group span {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .moment-timeline {
+    height: 492px;
+    margin-top: 8px;
+    padding-left: 0;
+  }
+
+  .moment-timeline__line {
+    gap: 6px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .moment-timeline__line--top {
+    top: 6px;
+  }
+
+  .moment-timeline__line--middle {
+    top: 240px;
+  }
+
+  .moment-timeline__line--bottom {
+    bottom: 14px;
+  }
+
+  .moment-bubble__skin {
+    transform: scale(1.04);
+    transform-origin: center;
+  }
+
+  .moment-bubbles .moment-bubble:nth-child(1) {
+    top: 14px !important;
+    left: 176px !important;
+    width: 148px !important;
+    height: 140px !important;
+  }
+
+  .moment-bubbles .moment-bubble:nth-child(2) {
+    top: 172px !important;
+    left: 36px !important;
+    width: 102px !important;
+    height: 96px !important;
+  }
+
+  .moment-bubbles .moment-bubble:nth-child(3) {
+    top: 274px !important;
+    left: 182px !important;
+    width: 108px !important;
+    height: 102px !important;
+  }
+
+  .moment-bubbles .moment-bubble:nth-child(4) {
+    top: 380px !important;
+    left: 72px !important;
+    width: 100px !important;
+    height: 94px !important;
+  }
+
+  .period-grid {
+    margin-top: 10px;
+  }
+
+  .period-grid__labels,
+  .period-grid__dates {
+    gap: 4px;
+    padding-left: 12px;
+  }
+
+  .period-grid__dates {
+    padding-block: 6px 10px;
+  }
+
+  .period-grid__chart {
+    min-height: 324px;
+    margin-top: 0;
+    padding-top: 8px;
+  }
+
+  .period-grid__chart .moment-timeline__line {
+    left: -2px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .period-grid__chart .moment-timeline__line--top {
+    top: 2px;
+  }
+
+  .period-grid__chart .moment-timeline__line--middle {
+    top: 218px;
+  }
+
+  .period-grid__chart .moment-timeline__line--bottom {
+    bottom: 16px;
+  }
+
+  .period-grid__columns {
+    gap: 4px;
+    min-height: 302px;
+    padding-left: 12px;
+  }
+
+  .period-grid__column {
+    min-height: 302px;
+  }
+
+  .period-grid__day-art {
+    height: 302px;
+  }
+
+  .home-floating-bar {
+    gap: 10px;
+    padding: 8px 20px calc(34px + var(--safe-bottom));
+  }
+
+  .home-floating-bar--embedded {
+    bottom: 0;
+  }
+
+  .home-floating-bar__analysis {
+    min-height: 46px;
+  }
+
+  .home-floating-bar__nav {
+    align-items: flex-end;
+  }
+
+  .analysis-sheet {
+    max-height: calc(100% - 88px - var(--safe-top));
+    min-height: 0;
+    padding: 20px 20px calc(116px + var(--safe-bottom));
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+  }
+
+  .analysis-sheet__content {
+    gap: 16px;
+  }
+
+  .analysis-input-bar {
+    left: 20px;
+    right: 20px;
+    bottom: calc(18px + var(--safe-bottom));
   }
 
   .bottom-area__nav-row {

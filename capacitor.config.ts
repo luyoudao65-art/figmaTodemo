@@ -4,9 +4,9 @@ const config: CapacitorConfig = {
   appId: 'com.figmatodemo.app',
   appName: 'Figma To Demo',
   webDir: 'dist',
-  bundledWebRuntime: false,
   server: {
     androidScheme: 'https',
+    cleartext: true,
   },
 };
 

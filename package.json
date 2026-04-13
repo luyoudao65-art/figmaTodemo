@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:host": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "cap:sync": "npm run build && npx cap sync android",
     "android:add": "npx cap add android",
     "android:open": "npx cap open android",
-    "android:apk:debug": "./scripts/build-android-debug.sh"
+    "android:apk:debug": "./scripts/build-android-debug.sh",
+    "android:live": "zsh ./scripts/run-android-live.sh"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.0",

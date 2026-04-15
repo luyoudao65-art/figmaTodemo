@@ -4,7 +4,6 @@ import { WaveBars } from '../components/WaveBars';
 
 type HomePageProps = {
   onOpenMoments: () => void;
-  onOpenAnxietyMoment: () => void;
   onOpenPlan: () => void;
   onOpenWilo: () => void;
   onOpenGoalAnalysis: () => void;
@@ -24,16 +23,12 @@ const homeHeroBars = [
 
 export function HomePage({
   onOpenMoments,
-  onOpenAnxietyMoment,
   onOpenPlan,
   onOpenWilo,
   onOpenGoalAnalysis,
   goalAnalysisOpen = false,
   onCloseGoalAnalysis,
 }: HomePageProps) {
-  void onOpenMoments;
-  void onOpenAnxietyMoment;
-
   return (
     <main className="app-shell app-shell--home-dark">
       <section className="phone-frame phone-frame--home-dark">

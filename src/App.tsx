@@ -172,12 +172,6 @@ function App() {
           setMomentEntryDetail(null);
           setScreen('moment-day');
         }}
-        onOpenAnxietyMoment={() => {
-          setHomeOverlay('none');
-          setMomentOverlay('none');
-          setMomentEntryDetail(null);
-          setScreen('moment-two');
-        }}
         onOpenPlan={() => {
           setHomeOverlay('none');
           setMomentOverlay('none');

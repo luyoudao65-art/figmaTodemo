@@ -357,8 +357,7 @@ button {
   flex-direction: column;
   gap: 8px;
   padding: 8px 24px calc(24px + var(--safe-bottom));
-  background:
-    linear-gradient(180deg, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 0.9) 24%, #fafafa 60%);
+  background: transparent;
 }
 
 .home-floating-bar--embedded {
@@ -367,11 +366,6 @@ button {
   right: 0;
   bottom: 0;
   z-index: 5;
-}
-
-.home-floating-bar--moments {
-  background:
-    linear-gradient(180deg, rgba(246, 245, 242, 0) 0%, rgba(246, 245, 242, 0.92) 24%, #f6f5f2 60%);
 }
 
 .home-floating-bar__analysis {
@@ -411,11 +405,11 @@ button {
   display: inline-flex;
   align-items: center;
   padding: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.9);
   border-radius: 999px;
-  background: rgba(250, 250, 250, 0.9);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  color: #808383;
+  background: rgba(58, 65, 64, 0.92);
+  box-shadow: none;
+  color: #959c9c;
 }
 
 .home-floating-bar__tab:disabled {
@@ -442,7 +436,7 @@ button {
   position: absolute;
   inset: 0;
   border-radius: 100px;
-  background: #f1f4f4;
+  background: #313735;
 }
 
 .home-floating-bar__tab .icon,
@@ -3841,61 +3835,6 @@ button {
   line-height: 18px;
 }
 
-.home-dark-bottom-nav {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 12;
-  display: block;
-  padding: 8px 24px calc(24px + var(--safe-bottom));
-  background:
-    linear-gradient(180deg, rgba(36, 42, 41, 0) 0%, rgba(36, 42, 41, 0.62) 36%, rgba(36, 42, 41, 0.9) 100%);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  pointer-events: auto;
-}
-
-.home-dark-bottom-nav__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  z-index: 1;
-}
-
-.home-dark-bottom-tab {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  border-radius: 999px;
-  background: rgba(58, 65, 64, 0.9);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  color: #959c9c;
-}
-
-.home-dark-bottom-tab--active {
-  color: #f1f4f4;
-}
-
-.home-dark-bottom-tab__surface {
-  position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 54px;
-  gap: 3px;
-  padding: 7px 8px 8px;
-}
-
-.home-dark-bottom-tab__surface span:last-child {
-  font-size: 10px;
-  line-height: 12px;
-  font-weight: 600;
-}
-
 /* Isolated Figma Workspace */
 .isolated-figma-shell {
   background:
@@ -4677,29 +4616,24 @@ button {
 }
 
 .home-floating-bar--moments-dark {
-  padding: 0 18px calc(18px + var(--safe-bottom));
-  background:
-    linear-gradient(180deg, rgba(23, 27, 25, 0) 0%, rgba(23, 27, 25, 0.82) 28%, rgba(23, 27, 25, 0.98) 100%);
+  padding: 8px 24px calc(24px + var(--safe-bottom));
+  background: transparent;
 }
 
 .home-floating-bar--moments-dark .home-floating-bar__analysis {
   background: rgba(255, 255, 255, 0.06);
   color: rgba(244, 244, 239, 0.88);
   box-shadow: none;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .home-floating-bar--moments-dark .home-floating-bar__nav {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 6px;
-  border-radius: 30px;
-  background: rgba(28, 33, 31, 0.88);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  padding: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
 }
 
 .home-floating-bar--moments-dark .home-floating-bar__tab,
@@ -4708,13 +4642,44 @@ button {
 }
 
 .home-floating-bar--moments-dark .home-floating-bar__tab {
-  border: none;
-  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  background: rgba(58, 65, 64, 0.92);
   box-shadow: none;
 }
 
 .home-floating-bar--moments-dark .home-floating-bar__selection {
   background: #313735;
+}
+
+.home-floating-bar--tone-light .home-floating-bar__tab,
+.home-floating-bar--moments-light .home-floating-bar__tab {
+  border: 1px solid rgba(17, 19, 19, 0.1);
+  background: rgba(250, 250, 250, 0.96);
+  color: #959c9c;
+  box-shadow: none;
+}
+
+.home-floating-bar--tone-light .home-floating-bar__tab--active,
+.home-floating-bar--moments-light .home-floating-bar__tab--active {
+  color: #242a29;
+}
+
+.home-floating-bar--tone-light .home-floating-bar__selection,
+.home-floating-bar--moments-light .home-floating-bar__selection {
+  background: #f1f4f4;
+}
+
+.home-floating-bar--moments-light {
+  padding: 8px 24px calc(24px + var(--safe-bottom));
+  background: transparent;
+}
+
+.home-floating-bar--moments-light .home-floating-bar__nav {
+  gap: 12px;
+  padding: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
 }
 
 .moment-related-button__label {
@@ -4868,111 +4833,6 @@ button {
 }
 
 /* Shared Bottom Tabs */
-.bottom-tab-nav {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 6;
-  padding: 8px 24px calc(24px + var(--safe-bottom));
-}
-
-.bottom-tab-nav--dark {
-  background:
-    linear-gradient(180deg, rgba(36, 42, 41, 0) 0%, rgba(36, 42, 41, 0.62) 36%, rgba(36, 42, 41, 0.9) 100%);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
-
-.bottom-tab-nav--light {
-  background:
-    linear-gradient(180deg, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 0.72) 34%, rgba(250, 250, 250, 0.92) 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.bottom-tab-nav__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.bottom-tab-nav__tab {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px;
-  border-radius: 999px;
-}
-
-.bottom-tab-nav--dark .bottom-tab-nav__tab {
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  background: rgba(58, 65, 64, 0.9);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  color: #959c9c;
-}
-
-.bottom-tab-nav--light .bottom-tab-nav__tab {
-  border: 1px solid rgba(255, 255, 255, 0.94);
-  background: rgba(250, 250, 250, 0.9);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  color: #959c9c;
-}
-
-.bottom-tab-nav__tab--active {
-  color: #f1f4f4;
-}
-
-.bottom-tab-nav--light .bottom-tab-nav__tab--active {
-  color: #242a29;
-}
-
-.bottom-tab-nav__surface {
-  position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 54px;
-  gap: 3px;
-  padding: 7px 8px 8px;
-}
-
-.bottom-tab-nav__selection {
-  position: absolute;
-  inset: 0;
-  border-radius: 100px;
-}
-
-.bottom-tab-nav--dark .bottom-tab-nav__selection {
-  background: #242a29;
-}
-
-.bottom-tab-nav--light .bottom-tab-nav__selection {
-  background: #f1f4f4;
-}
-
-.bottom-tab-nav__surface .icon,
-.bottom-tab-nav__surface span:last-child {
-  position: relative;
-  z-index: 1;
-}
-
-.bottom-tab-nav__surface .icon {
-  width: 24px;
-  height: 24px;
-}
-
-.bottom-tab-nav__surface span:last-child {
-  font-size: 10px;
-  line-height: 12px;
-  font-weight: 600;
-}
-
-.bottom-tab-nav--light .bottom-tab-nav__surface .icon path:first-child,
-.bottom-tab-nav--light .bottom-tab-nav__surface .icon circle {
-  fill: currentColor;
-}
-
 /* Home stack interaction */
 .home-dark-stack__button {
   border-style: solid;
@@ -5309,32 +5169,58 @@ button {
     linear-gradient(180deg, #dfe4e4 0%, #d2d7d8 100%);
 }
 
-.phone-frame--friend-memory .bottom-tab-nav--light {
-  background:
-    linear-gradient(180deg, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 0.58) 36%, rgba(250, 250, 250, 0.8) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+.phone-frame--friend-memory .home-floating-bar--moments-light,
+.phone-frame--friend-memory .home-floating-bar--tone-light {
+  background: transparent;
 }
 
-.phone-frame--friend-memory .bottom-tab-nav--light .bottom-tab-nav__tab {
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__nav,
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__nav {
+  background: transparent;
+  box-shadow: none;
+}
+
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab,
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab {
   border: 1px solid rgba(255, 255, 255, 0.94);
-  background: rgba(250, 250, 250, 0.92);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  background: rgba(250, 250, 250, 0.96);
+  color: #242a29;
+  box-shadow: none;
+}
+
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab--active,
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab--active {
   color: #242a29;
 }
 
-.phone-frame--friend-memory .bottom-tab-nav--light .bottom-tab-nav__tab--active {
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface .icon,
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface .icon,
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface span:last-child,
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface span:last-child {
   color: #242a29;
-  font-weight: 700;
 }
 
-.phone-frame--friend-memory .bottom-tab-nav--light .bottom-tab-nav__selection {
-  background: rgba(250, 250, 250, 0.95);
-}
-
-.phone-frame--friend-memory .bottom-tab-nav--light .bottom-tab-nav__surface .icon path:first-child,
-.phone-frame--friend-memory .bottom-tab-nav--light .bottom-tab-nav__surface .icon circle {
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface .icon path[fill="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface .icon path[fill="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface .icon rect[fill="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface .icon rect[fill="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface .icon circle[fill="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface .icon circle[fill="currentColor"] {
   fill: #242a29;
+}
+
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface .icon path[stroke="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface .icon path[stroke="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface .icon rect[stroke="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface .icon rect[stroke="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__tab-surface .icon circle[stroke="currentColor"],
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__tab-surface .icon circle[stroke="currentColor"] {
+  stroke: #242a29;
+}
+
+.phone-frame--friend-memory .home-floating-bar--moments-light .home-floating-bar__selection,
+.phone-frame--friend-memory .home-floating-bar--tone-light .home-floating-bar__selection {
+  background: #f1f4f4;
 }
 
 .friend-memory-page {

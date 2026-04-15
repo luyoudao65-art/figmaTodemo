@@ -11,6 +11,7 @@ import {
 
 type PlanPageProps = {
   variant?: 'default' | 'new-plan';
+  showPhoneLimit?: boolean;
   onGoHome: () => void;
 };
 
@@ -106,6 +107,7 @@ const planGroups = [
 
 export function PlanPage({
   variant = 'default',
+  showPhoneLimit = false,
   onGoHome,
 }: PlanPageProps) {
   const highlightRef = useRef<HTMLDivElement | null>(null);
@@ -146,7 +148,7 @@ export function PlanPage({
               </div>
 
               <div className="plan-timeline__content">
-                {planGroups.map((group) => (
+                {planGroups.filter(group => group.key !== 'new-plan' || showPhoneLimit).map((group) => (
                   <div
                     key={group.key}
                     className="plan-card-group"

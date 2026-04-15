@@ -11,6 +11,7 @@ type HomeFloatingBarProps = {
   className?: string;
   centerLabel?: string;
   onCenterClick?: () => void;
+  tone?: 'dark' | 'light';
   leftTab?: FloatingBarTab;
   rightTab?: FloatingBarTab;
 };
@@ -30,6 +31,7 @@ export function HomeFloatingBar({
   className = '',
   centerLabel = 'Wilo 正在听⋯',
   onCenterClick,
+  tone = 'dark',
   leftTab = defaultLeftTab,
   rightTab = defaultRightTab,
 }: HomeFloatingBarProps) {
@@ -37,7 +39,7 @@ export function HomeFloatingBar({
   const showCenter = Boolean(onCenterClick);
 
   return (
-    <div className={`home-floating-bar home-floating-bar--embedded ${className}`.trim()}>
+    <div className={`home-floating-bar home-floating-bar--embedded home-floating-bar--tone-${tone} ${className}`.trim()}>
       <nav className={`home-floating-bar__nav${showCenter ? '' : ' home-floating-bar__nav--compact'}`} aria-label="Floating navigation">
         <FloatingTabButton {...leftTab} />
 

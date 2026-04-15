@@ -25,6 +25,7 @@ function App() {
   const [momentOverlay, setMomentOverlay] = useState<MomentOverlay>('none');
   const [homeOverlay, setHomeOverlay] = useState<HomeOverlay>('none');
   const [planVariant, setPlanVariant] = useState<PlanVariant>('default');
+  const [phoneLimitShown, setPhoneLimitShown] = useState(false);
   const [returnScreen, setReturnScreen] = useState<Exclude<Screen, 'wilo'>>('home');
   const [friendMemoryReturn, setFriendMemoryReturn] = useState<FriendMemoryReturn>('moment-two');
   const [momentEntryDetail, setMomentEntryDetail] = useState<MomentDetailEntry>(null);
@@ -36,9 +37,12 @@ function App() {
     setScreen('wilo');
   };
 
-  const openPlan = (variant: PlanVariant) => {
+  const openPlan = (variant: PlanVariant, withPhoneLimit = false) => {
     setMomentOverlay('none');
     setPlanVariant(variant);
+    if (withPhoneLimit) {
+      setPhoneLimitShown(true);
+    }
     setScreen('plan');
   };
 
@@ -69,7 +73,7 @@ function App() {
         onOpenWiloSuggest={() => setMomentOverlay('wilo-suggest')}
         onOpenPlan={() => openPlan('default')}
         onCloseOverlay={() => setMomentOverlay('none')}
-        onConfirmPlan={() => openPlan('new-plan')}
+        onConfirmPlan={() => openPlan('new-plan', true)}
         onOpenFriendMemory={(detail) => {
           setFriendMemoryReturn(detail === 'excited' ? 'moment-day-excited' : 'moment-day-anxious');
           setMomentEntryDetail(detail);
@@ -98,7 +102,7 @@ function App() {
         onOpenPlan={() => openPlan('default')}
         onOpenWiloSuggest={() => setMomentOverlay('wilo-suggest')}
         onCloseOverlay={() => setMomentOverlay('none')}
-        onConfirmPlan={() => openPlan('new-plan')}
+        onConfirmPlan={() => openPlan('new-plan', true)}
         onOpenFriendMemory={(detail) => {
           setFriendMemoryReturn(detail === 'excited' ? 'moment-day-excited' : 'moment-day-anxious');
           setMomentEntryDetail(detail);
@@ -151,6 +155,7 @@ function App() {
     content = (
       <PlanPage
         variant={planVariant}
+        showPhoneLimit={phoneLimitShown}
         onGoHome={() => {
           setMomentOverlay('none');
           setHomeOverlay('none');

@@ -1,4 +1,5 @@
 import { WiloAnalysisSheet } from '../components/WiloAnalysisSheet';
+import { HomeFloatingBar } from '../components/HomeFloatingBar';
 import { WaveBars } from '../components/WaveBars';
 
 type HomePageProps = {
@@ -160,7 +161,12 @@ export function HomePage({
           </section>
         </div>
 
-        <HomeBottomNav onOpenPlan={onOpenPlan} />
+        <HomeFloatingBar
+          tone="dark"
+          className="home-floating-bar--moments-dark"
+          leftTab={{ label: '主页', icon: 'home', active: true }}
+          rightTab={{ label: '计划', icon: 'plan', onClick: onOpenPlan }}
+        />
 
         {goalAnalysisOpen ? (
           <WiloAnalysisSheet
@@ -171,28 +177,6 @@ export function HomePage({
         ) : null}
       </section>
     </main>
-  );
-}
-
-function HomeBottomNav({ onOpenPlan }: { onOpenPlan: () => void }) {
-  return (
-    <div className="home-dark-bottom-nav">
-      <nav className="home-dark-bottom-nav__bar" aria-label="底部导航">
-        <button type="button" className="home-dark-bottom-tab home-dark-bottom-tab--active">
-          <span className="home-dark-bottom-tab__surface">
-            <HomeTagIcon />
-            <span>主页</span>
-          </span>
-        </button>
-
-        <button type="button" className="home-dark-bottom-tab" onClick={onOpenPlan}>
-          <span className="home-dark-bottom-tab__surface">
-            <PlanDocIcon />
-            <span>计划</span>
-          </span>
-        </button>
-      </nav>
-    </div>
   );
 }
 
@@ -224,30 +208,6 @@ function StarIcon({ className = 'icon' }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </svg>
-  );
-}
-
-function HomeTagIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <path
-        d="M12.4 3.1c-.38-.38-.9-.6-1.43-.6H5a2 2 0 0 0-2 2v5.97c0 .53.21 1.04.59 1.42l7.52 7.52a2 2 0 0 0 2.82 0l5.49-5.49a2 2 0 0 0 0-2.82L12.4 3.1Z"
-        fill="currentColor"
-      />
-      <circle cx="7.5" cy="7.5" r="1.6" fill="#242a29" />
-    </svg>
-  );
-}
-
-function PlanDocIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <path
-        d="M14 3c3.1 0 5 1.9 5 5v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7Z"
-        fill="currentColor"
-      />
-      <path d="M8 9h6M8 13h8M8 17h5" fill="none" stroke="#242a29" strokeLinecap="round" strokeWidth="1.8" />
     </svg>
   );
 }

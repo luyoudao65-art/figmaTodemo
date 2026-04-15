@@ -1,39 +1,9 @@
-import type { ReactNode } from 'react';
-import { HomeFloatingBar } from '../components/HomeFloatingBar';
-import {
-  FragmentExerciseIcon,
-  InflammationWarningIcon,
-  MealAdviceIcon,
-  TargetPlanIcon,
-} from '../components/FeatureIcons';
 import { WiloAnalysisSheet } from '../components/WiloAnalysisSheet';
-
-const heroOrbitAssets = {
-  ring: 'https://www.figma.com/api/mcp/asset/ee958f2a-e3de-473a-b7bd-773226995a0b',
-  yellow: 'https://www.figma.com/api/mcp/asset/63bcf1c0-3ef9-4070-bcad-be6e15cdd26e',
-  blue: 'https://www.figma.com/api/mcp/asset/77717068-e76d-4bf0-af75-3a171980fb1f',
-  mint: 'https://www.figma.com/api/mcp/asset/419083ed-f314-4228-8a8c-bec191725b0d',
-  gray: 'https://www.figma.com/api/mcp/asset/c0779061-d7f5-4258-a2df-f1fa9971adfc',
-  peach: 'https://www.figma.com/api/mcp/asset/7236d07e-e222-49ac-a0df-0a017e9cc95b',
-};
-
-type GoalCardProps = {
-  title: string;
-  description: string;
-  icon: ReactNode;
-  trailing: ReactNode;
-  muted?: boolean;
-  actionRow?: ReactNode;
-};
-
-type TimelineBlockProps = {
-  timeLabel: string;
-  timeTone: 'active' | 'muted';
-  entries: GoalCardProps[];
-};
+import { WaveBars } from '../components/WaveBars';
 
 type HomePageProps = {
   onOpenMoments: () => void;
+  onOpenAnxietyMoment: () => void;
   onOpenPlan: () => void;
   onOpenWilo: () => void;
   onOpenGoalAnalysis: () => void;
@@ -41,154 +11,156 @@ type HomePageProps = {
   onCloseGoalAnalysis: () => void;
 };
 
-const currentGoals: GoalCardProps[] = [
-  {
-    title: '目标计划',
-    description: '提前15分钟开始准备睡觉，原来习惯23:30睡，今天调整到23:15',
-    icon: <TargetPlanIcon />,
-    trailing: <CircleActionIcon />,
-  },
-];
+const homeCardImage = '/src/pic/FigmaPic/moment.png';
+const ellipseIcon = '/src/icons/Ellipse 3258.svg';
+const stairIcon = '/src/icons/stair.svg';
 
-const smartPlanBlocks: TimelineBlockProps[] = [
-  {
-    timeLabel: '14:00-15:00 进行中',
-    timeTone: 'active',
-    entries: [
-      {
-        title: '碎片化运动',
-        description:
-          '建议立即接受5-10分钟的自然光照射（靠近窗户或短时户外）',
-        icon: <FragmentExerciseIcon />,
-        trailing: <CircleActionIcon />,
-      },
-    ],
-  },
-  {
-    timeLabel: '已完成',
-    timeTone: 'muted',
-    entries: [
-      {
-        title: '炎症预警',
-        description: '已智能调整接下来10天饮食建议：增加深海鱼，减少糖分',
-        icon: <InflammationWarningIcon />,
-        trailing: <CheckIcon />,
-      },
-      {
-        title: '饮食推荐',
-        description: '午餐：“超级碗”的鳕鱼谷物碗',
-        icon: <MealAdviceIcon />,
-        trailing: <CheckIcon />,
-        muted: true,
-        actionRow: (
-          <div className="skill-action">
-            <span>Skills 自动下单外卖</span>
-            <button type="button" className="skill-action__button">
-              {/* TODO: wire this to the real authorization flow once the integration contract exists. */}
-              <span>去授权</span>
-              <ChevronRightIcon />
-            </button>
-          </div>
-        ),
-      },
-    ],
-  },
+const homeHeroBars = [
+  27, 15, 18, 10, 15, 9, 10, 17, 13, 17, 24, 15,
+  17, 13, 11, 15, 20, 17, 18, 22, 17, 11, 17, 22,
+  24, 14, 17, 10, 9, 3, 8, 8, 6, 3, 8, 7,
 ];
 
 export function HomePage({
   onOpenMoments,
+  onOpenAnxietyMoment,
   onOpenPlan,
   onOpenWilo,
   onOpenGoalAnalysis,
   goalAnalysisOpen = false,
   onCloseGoalAnalysis,
 }: HomePageProps) {
-  return (
-    <main className="app-shell">
-      <section className="phone-frame">
-        <div className="phone-scroll phone-scroll--home">
-          <button
-            type="button"
-            className="hero hero--interactive hero--energy"
-            onClick={onOpenMoments}
-            aria-label="打开 Moments 页面"
-          >
-            <StatusBar />
+  void onOpenMoments;
+  void onOpenAnxietyMoment;
 
-            <div className="hero__content hero__content--energy">
-              <div className="energy-orbit" aria-hidden="true">
-                <div className="energy-orbit__dust" />
-                <img
-                  src={heroOrbitAssets.ring}
-                  alt=""
-                  className="energy-orbit__asset energy-orbit__asset--ring"
-                />
-                <img
-                  src={heroOrbitAssets.yellow}
-                  alt=""
-                  className="energy-orbit__asset energy-orbit__asset--yellow"
-                />
-                <img
-                  src={heroOrbitAssets.blue}
-                  alt=""
-                  className="energy-orbit__asset energy-orbit__asset--blue"
-                />
-                <img
-                  src={heroOrbitAssets.mint}
-                  alt=""
-                  className="energy-orbit__asset energy-orbit__asset--mint"
-                />
-                <img
-                  src={heroOrbitAssets.gray}
-                  alt=""
-                  className="energy-orbit__asset energy-orbit__asset--gray"
-                />
-                <img
-                  src={heroOrbitAssets.peach}
-                  alt=""
-                  className="energy-orbit__asset energy-orbit__asset--peach"
-                />
-                <div className="energy-orbit__focus">
-                  <span>活力</span>
-                  <span>在线</span>
+  return (
+    <main className="app-shell app-shell--home-dark">
+      <section className="phone-frame phone-frame--home-dark">
+        <div className="phone-scroll phone-scroll--home-dark">
+            <section className="home-dark-hero">
+            <div className="home-dark-hero__content">
+              <div className="home-dark-hero__header">
+                <div className="home-dark-profile">
+                  <img className="home-dark-profile__avatar" src={ellipseIcon} alt="" aria-hidden="true" />
+                  <strong>Hi, Leo</strong>
                 </div>
+
+                <div className="home-dark-date-pill" aria-label="当前日期 28">
+                  28
+                </div>
+              </div>
+
+              <div className="home-dark-card-cluster">
+                <div className="home-dark-stack">
+                  <div className="home-dark-stack__card home-dark-stack__card--anger">
+                    <div className="home-dark-stack__thumb" />
+                    <div className="home-dark-stack__meta">
+                      <strong>愤怒</strong>
+                      <span>12:00-14:00</span>
+                    </div>
+                  </div>
+
+                  <div className="home-dark-stack__card home-dark-stack__card--anxiety">
+                    <div className="home-dark-stack__thumb" />
+                    <div className="home-dark-stack__meta">
+                      <strong>焦虑</strong>
+                      <span>12:00-14:00</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="home-dark-moment-card"
+                  onClick={onOpenMoments}
+                  aria-label="打开 Moment 页面"
+                >
+                  <div className="home-dark-moment-card__image-wrap">
+                    <img
+                      className="home-dark-moment-card__image"
+                      src={homeCardImage}
+                      alt="水上运动时刻"
+                    />
+                  </div>
+
+                  <div className="home-dark-moment-card__body">
+                    <div className="home-dark-moment-card__copy">
+                      <div>
+                        <strong>兴奋</strong>
+                        <span>13:00-14:00</span>
+                      </div>
+                      <img
+                        className="home-dark-moment-card__accent"
+                        src={stairIcon}
+                        alt=""
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    <div className="home-dark-wave" aria-hidden="true">
+                      <WaveBars
+                        bars={homeHeroBars}
+                        height={28}
+                        fillWidth
+                        accentStart={18}
+                        accentEnd={35}
+                        accentColor="rgba(216, 223, 222, 0.72)"
+                        backgroundColor="rgba(128, 131, 131, 0.5)"
+                        borderRadius={1}
+                      />
+                    </div>
+
+                    <div className="home-dark-pager" aria-hidden="true">
+                      <span className="home-dark-pager__dot home-dark-pager__dot--active" />
+                      <span className="home-dark-pager__dot" />
+                      <span className="home-dark-pager__dot" />
+                    </div>
+                  </div>
+                </button>
               </div>
             </div>
-          </button>
+          </section>
 
-          <section className="content-sheet">
-            <PageSection
-              title="我的目标"
-              subtitle="减重/连续 1 天"
-              progress={0.12}
-              onOpen={onOpenGoalAnalysis}
-            >
-              {currentGoals.map((goal) => (
-                <GoalCard
-                  key={goal.title}
-                  {...goal}
-                />
-              ))}
-            </PageSection>
+          <section className="home-dark-content">
+            <section className="home-dark-panel">
+              <button
+                type="button"
+                className="home-dark-panel__header"
+                onClick={onOpenGoalAnalysis}
+                aria-label="打开睡眠提升分析"
+              >
+                <div className="home-dark-panel__header-main">
+                  <div className="home-dark-panel__title-group">
+                    <h2>睡眠提升</h2>
+                  </div>
+                  <div className="home-dark-panel__progress-group">
+                    <span>连续 14天</span>
+                    <div className="home-dark-progress" aria-hidden="true">
+                      <span style={{ width: '62%' }} />
+                    </div>
+                  </div>
+                </div>
+              </button>
 
-            <PageSection title="智能计划" onOpen={onOpenPlan}>
-              <div className="timeline">
-                <div className="timeline__rail" aria-hidden="true">
-                  <div className="timeline__line timeline__line--top" />
-                  <span className="timeline__dot timeline__dot--top" />
-                  <div className="timeline__line timeline__line--bottom" />
-                  <span className="timeline__dot timeline__dot--bottom" />
+              <button
+                type="button"
+                className="home-dark-wilo-card"
+                onClick={onOpenWilo}
+                aria-label="打开 Wilo"
+              >
+<div className="home-dark-wilo-card__icon">
+                    <StarIcon className="icon icon--home-dark-spark" />
+                  </div>
+                <div className="home-dark-wilo-card__copy">
+                  <strong>Wilo 一下</strong>
+                  <span>检测到心率上升过快，已为你播放放松音乐</span>
                 </div>
-                <div className="timeline__content">
-                  {smartPlanBlocks.map((block) => (
-                    <TimelineBlock key={block.timeLabel} {...block} />
-                  ))}
-                </div>
-              </div>
-            </PageSection>
+              </button>
+            </section>
           </section>
         </div>
-        <HomeFloatingBar onCenterClick={onOpenWilo} rightTab={{ label: '计划', icon: 'plan', onClick: onOpenPlan }} />
+
+        <HomeBottomNav onOpenPlan={onOpenPlan} />
 
         {goalAnalysisOpen ? (
           <WiloAnalysisSheet
@@ -199,6 +171,28 @@ export function HomePage({
         ) : null}
       </section>
     </main>
+  );
+}
+
+function HomeBottomNav({ onOpenPlan }: { onOpenPlan: () => void }) {
+  return (
+    <div className="home-dark-bottom-nav">
+      <nav className="home-dark-bottom-nav__bar" aria-label="底部导航">
+        <button type="button" className="home-dark-bottom-tab home-dark-bottom-tab--active">
+          <span className="home-dark-bottom-tab__surface">
+            <HomeTagIcon />
+            <span>主页</span>
+          </span>
+        </button>
+
+        <button type="button" className="home-dark-bottom-tab" onClick={onOpenPlan}>
+          <span className="home-dark-bottom-tab__surface">
+            <PlanDocIcon />
+            <span>计划</span>
+          </span>
+        </button>
+      </nav>
+    </div>
   );
 }
 
@@ -216,140 +210,44 @@ export function StatusBar({ inverse = false }: { inverse?: boolean }) {
   );
 }
 
-function PageSection({
-  title,
-  subtitle,
-  progress,
-  onOpen,
-  children,
-}: {
-  title: string;
-  subtitle?: string;
-  progress?: number;
-  onOpen?: () => void;
-  children: ReactNode;
-}) {
+function StarIcon({ className = 'icon' }: { className?: string }) {
   return (
-    <section className="page-section">
-      <header className="page-section__header">
-        <div className="page-section__title-group">
-          {onOpen ? (
-            <button type="button" className="page-section__title-button" onClick={onOpen}>
-              <div className="page-section__title-row">
-                <h2>{title}</h2>
-                <ChevronRightIcon />
-              </div>
-            </button>
-          ) : (
-            <div className="page-section__title-row">
-              <h2>{title}</h2>
-              <ChevronRightIcon />
-            </div>
-          )}
-          {subtitle ? (
-            <div className="page-section__meta">
-              <span>{subtitle}</span>
-              <ProgressBar value={progress ?? 0} />
-            </div>
-          ) : null}
-        </div>
-      </header>
-      <div className="page-section__body">{children}</div>
-    </section>
-  );
-}
-
-function ProgressBar({ value }: { value: number }) {
-  return (
-    <div className="progress-bar" aria-hidden="true">
-      <span className="progress-bar__fill" style={{ width: `${value * 100}%` }} />
-    </div>
-  );
-}
-
-function TimelineBlock({ timeLabel, timeTone, entries }: TimelineBlockProps) {
-  return (
-    <div className="timeline-block">
-      <p
-        className={
-          timeTone === 'active'
-            ? 'timeline-block__label timeline-block__label--active'
-            : 'timeline-block__label timeline-block__label--muted'
-        }
-      >
-        {timeLabel}
-      </p>
-      <div className="timeline-block__cards">
-        {entries.map((entry, index) => (
-          <GoalCard key={`${timeLabel}-${entry.title}-${index}`} {...entry} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function GoalCard({
-  title,
-  description,
-  icon,
-  trailing,
-  muted = false,
-  actionRow,
-}: GoalCardProps) {
-  return (
-    <article className={`goal-card${muted ? ' goal-card--muted' : ''}`}>
-      <div className="goal-card__content">
-        <div className="goal-card__icon" aria-hidden="true">
-          {icon}
-        </div>
-        <div className="goal-card__text">
-          <h3>{title}</h3>
-          <p>{description}</p>
-        </div>
-        <div className="goal-card__trailing" aria-hidden="true">
-          {trailing}
-        </div>
-      </div>
-      {actionRow}
-    </article>
-  );
-}
-
-export function ChevronRightIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="icon icon--chevron" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
       <path
-        d="M9 6.5L14.5 12L9 17.5"
-        fill="none"
-        stroke="currentColor"
+        d="M19.811 10.4668C19.9181 10.8821 20.1346 11.261 20.4379 11.5643C20.7411 11.8676 21.1201 12.084 21.5354 12.1911L27.5638 15.4228C27.6894 15.4585 27.8 15.5341 27.8787 15.6383C27.9574 15.7424 28 15.8694 28 16C28 16.1306 27.9574 16.2576 27.8787 16.3617C27.8 16.4659 27.6894 16.5415 27.5638 16.5772L21.5354 19.8101C21.1202 19.9171 20.7414 20.1334 20.4381 20.4364C20.1349 20.7394 19.9183 21.1182 19.811 21.5332L16.5793 27.5617C16.544 27.6878 16.4685 27.7989 16.3641 27.878C16.2598 27.9572 16.1325 28 16.0015 28C15.8706 28 15.7433 27.9572 15.6389 27.878C15.5346 27.7989 15.459 27.6878 15.4238 27.5617L12.1933 21.5332C12.0861 21.118 11.8697 20.739 11.5664 20.4357C11.2632 20.1325 10.8842 19.916 10.4689 19.8089L4.44043 16.5784C4.31384 16.5435 4.20219 16.468 4.12263 16.3635C4.04307 16.259 3.99999 16.1313 3.99999 16C3.99999 15.8687 4.04307 15.741 4.12263 15.6365C4.20219 15.532 4.31384 15.4565 4.44043 15.4216L10.4689 12.1911C10.8842 12.084 11.2632 11.8676 11.5664 11.5643C11.8697 11.261 12.0861 10.8821 12.1933 10.4668L15.425 4.4383C15.4602 4.31221 15.5358 4.20112 15.6401 4.12198C15.7445 4.04285 15.8718 4.00001 16.0027 4.00001C16.1337 4.00001 16.261 4.04285 16.3653 4.12198C16.4697 4.20112 16.5452 4.31221 16.5805 4.4383L19.811 10.4668Z"
+        fill="#AAB3B2"
+      />
+      <path
+        d="M26.6667 4V9.33333M29.3333 6.66667H24M5.33333 22.6667V25.3333M6.66667 24H4"
+        stroke="#AAB3B2"
+        strokeWidth="2.66667"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
       />
     </svg>
   );
 }
 
-function CircleActionIcon() {
+function HomeTagIcon() {
   return (
-    <svg viewBox="0 0 28 28" className="icon" aria-hidden="true">
-      <circle cx="14" cy="14" r="11.5" fill="none" stroke="#AFB7B6" strokeWidth="2" />
+    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
+      <path
+        d="M12.4 3.1c-.38-.38-.9-.6-1.43-.6H5a2 2 0 0 0-2 2v5.97c0 .53.21 1.04.59 1.42l7.52 7.52a2 2 0 0 0 2.82 0l5.49-5.49a2 2 0 0 0 0-2.82L12.4 3.1Z"
+        fill="currentColor"
+      />
+      <circle cx="7.5" cy="7.5" r="1.6" fill="#242a29" />
     </svg>
   );
 }
 
-function CheckIcon() {
+function PlanDocIcon() {
   return (
-    <svg viewBox="0 0 28 28" className="icon" aria-hidden="true">
-      <circle cx="14" cy="14" r="12" fill="#242A29" opacity="0.06" />
+    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
       <path
-        d="M9.5 14.3l3 3 6-6.4"
-        fill="none"
-        stroke="#242A29"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
+        d="M14 3c3.1 0 5 1.9 5 5v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7Z"
+        fill="currentColor"
       />
+      <path d="M8 9h6M8 13h8M8 17h5" fill="none" stroke="#242a29" strokeLinecap="round" strokeWidth="1.8" />
     </svg>
   );
 }

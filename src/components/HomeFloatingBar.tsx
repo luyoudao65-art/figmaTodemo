@@ -10,9 +10,7 @@ type FloatingBarTab = {
 type HomeFloatingBarProps = {
   className?: string;
   centerLabel?: string;
-  onCenterClick: () => void;
-  onOpenAnalysis?: () => void;
-  analysisLabel?: string;
+  onCenterClick?: () => void;
   leftTab?: FloatingBarTab;
   rightTab?: FloatingBarTab;
 };
@@ -32,31 +30,27 @@ export function HomeFloatingBar({
   className = '',
   centerLabel = 'Wilo 正在听⋯',
   onCenterClick,
-  onOpenAnalysis,
-  analysisLabel = 'Agent 正在分析',
   leftTab = defaultLeftTab,
   rightTab = defaultRightTab,
 }: HomeFloatingBarProps) {
+  const hasCenterLabel = centerLabel.trim().length > 0;
+  const showCenter = Boolean(onCenterClick);
+
   return (
     <div className={`home-floating-bar home-floating-bar--embedded ${className}`.trim()}>
-      {onOpenAnalysis ? (
-        <button type="button" className="home-floating-bar__analysis" onClick={onOpenAnalysis}>
-          <span className="home-floating-bar__analysis-left">
-            <span className="thinking-spin" aria-hidden="true">
-              <AiSparkIcon className="icon icon--thinking" />
-            </span>
-            <span>{analysisLabel}</span>
-          </span>
-          <ChevronRightIcon />
-        </button>
-      ) : null}
-
-      <nav className="home-floating-bar__nav" aria-label="Floating navigation">
+      <nav className={`home-floating-bar__nav${showCenter ? '' : ' home-floating-bar__nav--compact'}`} aria-label="Floating navigation">
         <FloatingTabButton {...leftTab} />
 
-        <button type="button" className="home-floating-bar__center" onClick={onCenterClick}>
-          <span>{centerLabel}</span>
-        </button>
+        {showCenter ? (
+          <button
+            type="button"
+            className={`home-floating-bar__center${hasCenterLabel ? '' : ' home-floating-bar__center--icon'}`}
+            onClick={onCenterClick}
+            aria-label={hasCenterLabel ? centerLabel : '打开 Wilo'}
+          >
+            {hasCenterLabel ? <span>{centerLabel}</span> : <AiSparkIcon className="icon home-floating-bar__center-icon" />}
+          </button>
+        ) : null}
 
         <FloatingTabButton {...rightTab} />
       </nav>
@@ -102,21 +96,6 @@ export function AiSparkIcon({ className = 'icon' }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function ChevronRightIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="icon icon--chevron-small" aria-hidden="true">
-      <path
-        d="M7.4 5.2L12.2 10l-4.8 4.8"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
       />
     </svg>
   );

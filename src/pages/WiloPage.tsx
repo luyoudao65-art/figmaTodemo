@@ -1,4 +1,4 @@
-import { StatusBar } from './HomePage';
+
 
 type WiloPageProps = {
   onBack: () => void;
@@ -11,10 +11,10 @@ const bars = [
 
 export function WiloPage({ onBack }: WiloPageProps) {
   return (
-    <main className="app-shell">
-      <section className="phone-frame phone-frame--moments">
-        <div className="phone-scroll phone-scroll--wilo">
-          <StatusBar />
+    <main className="app-shell app-shell--moment-dark">
+      <section className="phone-frame phone-frame--moments phone-frame--moments-dark">
+        <div className="phone-scroll phone-scroll--moment-dark phone-scroll--wilo">
+
           <header className="wilo-page__nav">
             <button type="button" className="page-back-button page-back-button--inline" onClick={onBack} aria-label="返回">
               <ChevronLeftIcon />

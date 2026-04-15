@@ -8,6 +8,12 @@ type SuggestSheetProps = {
   onPrimaryAction: () => void;
 };
 
+type MomentOptimizeSheetProps = {
+  variant: 'moment-optimize';
+  onClose: () => void;
+  onPrimaryAction: () => void;
+};
+
 type AgentSheetProps = {
   variant: 'agent';
   onClose: () => void;
@@ -24,7 +30,11 @@ type ChatDemoSheetProps = {
   onPrimaryAction: () => void;
 };
 
-type WiloAnalysisSheetProps = SuggestSheetProps | AgentSheetProps | ChatDemoSheetProps;
+type WiloAnalysisSheetProps =
+  | SuggestSheetProps
+  | MomentOptimizeSheetProps
+  | AgentSheetProps
+  | ChatDemoSheetProps;
 
 const defaultAgentLines = [
   '根据我目前整合的数据（饮食记录、心率及周围环境等）：',
@@ -39,14 +49,20 @@ const demoAnswerLines = [
   '◎如果今晚提前进入睡前准备，明天更容易保持减脂计划和运动安排。',
 ];
 
+const momentOptimizeLines = [
+  '根据我目前整合的数据（运动记录、心率及周围环境等）：建议今晚10:30后远离蓝光快速入睡，平复情绪，保证睡眠质量以恢复身心平衡。',
+];
+
 export function WiloAnalysisSheet(props: WiloAnalysisSheetProps) {
   const isSuggest = props.variant === 'suggest';
+  const isMomentOptimize = props.variant === 'moment-optimize';
   const isChatDemo = props.variant === 'chat-demo';
   const thinkingLines = useMemo(() => {
     if (isSuggest) return [];
+    if (isMomentOptimize) return momentOptimizeLines;
     if (isChatDemo) return demoAnswerLines;
     return props.thinkingLines ?? defaultAgentLines;
-  }, [isSuggest, isChatDemo, props]);
+  }, [isSuggest, isMomentOptimize, isChatDemo, props]);
   const [demoStage, setDemoStage] = useState(isChatDemo ? 0 : 3);
 
   useEffect(() => {
@@ -66,6 +82,8 @@ export function WiloAnalysisSheet(props: WiloAnalysisSheetProps) {
     };
   }, [isChatDemo]);
 
+  const sheetClassName = `analysis-sheet${isMomentOptimize ? ' analysis-sheet--dark' : ''}`;
+
   return (
     <>
       <button
@@ -74,11 +92,10 @@ export function WiloAnalysisSheet(props: WiloAnalysisSheetProps) {
         aria-label="关闭分析面板"
         onClick={props.onClose}
       />
-      <section className="analysis-sheet">
+      <section className={sheetClassName}>
         <div className="analysis-sheet__content">
-          <div className="analysis-sheet__title-row">
+          <div className={`analysis-sheet__title-row${isMomentOptimize ? ' analysis-sheet__title-row--dark' : ''}`}>
             <h2>Wilo 分析中</h2>
-            <AiSparkIcon className="icon analysis-sheet__title-icon" />
           </div>
 
           {isSuggest ? (
@@ -108,6 +125,37 @@ export function WiloAnalysisSheet(props: WiloAnalysisSheetProps) {
                   >
                     <AiSparkIcon className="icon icon--sparkle-outline" />
                     <span>确认计划</span>
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : isMomentOptimize ? (
+            <>
+              <div className="analysis-sheet__header analysis-sheet__header--dark">
+                <p className="analysis-sheet__thinking-time">已思考 3s</p>
+                {thinkingLines.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </div>
+
+              <div className="analysis-sheet__section">
+                <p className="analysis-sheet__label analysis-sheet__label--dark">增加今日计划</p>
+                <div className="analysis-card analysis-card--dark">
+                  <div className="analysis-card__row">
+                    <div className="analysis-card__icon analysis-card__icon--dark" aria-hidden="true">
+                      <PhoneLimitIcon />
+                    </div>
+                    <div className="analysis-card__text analysis-card__text--dark">
+                      <h3>远离手机</h3>
+                      <p>晚10:30后无法打开除必要通讯工作软件外其他软件</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="analysis-confirm-button"
+                    onClick={props.onPrimaryAction}
+                  >
+                    确认计划
                   </button>
                 </div>
               </div>
@@ -217,34 +265,57 @@ export function WiloAnalysisSheet(props: WiloAnalysisSheetProps) {
           )}
         </div>
 
-        <AnalysisInputBar />
+        <AnalysisInputBar
+          dark={isMomentOptimize}
+          chips={
+            isMomentOptimize
+              ? ['感觉这两天不舒服', '明天会下雨吗', '今天应该穿些什么衣服']
+              : undefined
+          }
+        />
       </section>
     </>
   );
 }
 
-function AnalysisInputBar() {
+function AnalysisInputBar({
+  dark = false,
+  chips,
+}: {
+  dark?: boolean;
+  chips?: string[];
+}) {
   return (
-    <div className="analysis-input-bar">
-      <button type="button" className="analysis-input-bar__icon">
-        <GalleryIcon />
-      </button>
-      <div className="analysis-input-bar__field">
-        <span>输入你的身体感受</span>
+    <div className={`analysis-input-bar-wrap${dark ? ' analysis-input-bar-wrap--dark' : ''}`}>
+      {chips?.length ? (
+        <div className="analysis-input-bar__chips" aria-hidden="true">
+          {chips.map((chip) => (
+            <span key={chip} className="analysis-input-bar__chip">
+              {chip}
+            </span>
+          ))}
+        </div>
+      ) : null}
+
+      <div className={`analysis-input-bar${dark ? ' analysis-input-bar--dark' : ''}`}>
+        <button type="button" className={`analysis-input-bar__icon${dark ? ' analysis-input-bar__icon--dark' : ''}`}>
+          <GalleryIcon />
+        </button>
+        <div className={`analysis-input-bar__field${dark ? ' analysis-input-bar__field--dark' : ''}`}>
+          <span>输入你的身体感受</span>
+        </div>
+        <button type="button" className={`analysis-input-bar__icon${dark ? ' analysis-input-bar__icon--dark' : ''}`}>
+          <MicIcon />
+        </button>
       </div>
-      <button type="button" className="analysis-input-bar__icon">
-        <MicIcon />
-      </button>
     </div>
   );
 }
 
 function GalleryIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="9" cy="10" r="1.6" fill="currentColor" />
-      <path d="M6.5 17l4.2-4.2 2.8 2.8 2.7-2.7 1.3 1.3" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="icon" aria-hidden="true">
+      <path d="M21 14.9999L17.914 11.9139C17.5389 11.539 17.0303 11.3284 16.5 11.3284C15.9697 11.3284 15.4611 11.539 15.086 11.9139L6 20.9999M5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3ZM11 9C11 10.1046 10.1046 11 9 11C7.89543 11 7 10.1046 7 9C7 7.89543 7.89543 7 9 7C10.1046 7 11 7.89543 11 9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }

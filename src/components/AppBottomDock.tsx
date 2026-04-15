@@ -3,7 +3,6 @@ type AppBottomDockProps = {
   onSelectDaily: () => void;
   onSelectMoments: () => void;
   onSelectWilo: () => void;
-  onOpenAnalysis?: () => void;
   className?: string;
 };
 
@@ -12,23 +11,10 @@ export function AppBottomDock({
   onSelectDaily,
   onSelectMoments,
   onSelectWilo,
-  onOpenAnalysis,
   className = '',
 }: AppBottomDockProps) {
   return (
     <div className={`bottom-area ${className}`.trim()}>
-      {onOpenAnalysis ? (
-        <button type="button" className="analysis-bar" onClick={onOpenAnalysis}>
-          <span className="analysis-bar__left">
-            <span className="thinking-spin" aria-hidden="true">
-              <AiSparkIcon className="icon icon--thinking" />
-            </span>
-            <span>Agent 正在分析</span>
-          </span>
-          <ChevronRightIcon />
-        </button>
-      ) : null}
-
       <div className="bottom-area__nav-row">
         <nav className="bottom-nav" aria-label="Primary">
           <div className="bottom-nav__group bottom-nav__group--wide">
@@ -78,21 +64,6 @@ export function AiSparkIcon({ className = 'icon' }: { className?: string }) {
         fill="currentColor"
       />
       <circle cx="5.3" cy="16.8" r="1.6" fill="currentColor" />
-    </svg>
-  );
-}
-
-function ChevronRightIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="icon icon--chevron-small" aria-hidden="true">
-      <path
-        d="M7.4 5.2L12.2 10l-4.8 4.8"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
     </svg>
   );
 }

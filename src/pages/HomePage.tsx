@@ -2,11 +2,17 @@ import { WiloAnalysisSheet } from '../components/WiloAnalysisSheet';
 import { HomeFloatingBar } from '../components/HomeFloatingBar';
 import { WaveBars } from '../components/WaveBars';
 import homeCardImage from '../pic/FigmaPic/moment.png';
+import anxiousImage from '../pic/FigmaPic/peopletalking.webp';
 import ellipseIcon from '../icons/Ellipse 3258.svg';
 import stairIcon from '../icons/stair.svg';
 
+const homeStackAnxiousBars = [18, 11, 15, 8, 13, 9, 14, 12, 16, 11, 15, 21, 14, 16, 12, 11, 14, 18, 15, 16, 20, 14, 17, 10, 15, 19, 20, 13, 9, 8, 10, 9, 8, 10, 9, 7, 10, 9];
+const homeHeroExcitedBars = [24, 15, 19, 10, 16, 11, 18, 14, 20, 15, 19, 25, 17, 20, 15, 13, 17, 22, 18, 20, 25, 17, 21, 12, 19, 24, 25, 17, 10, 9, 12, 11, 10, 12, 11, 9, 12, 11];
+
 type HomePageProps = {
+  isFirstVisit?: boolean;
   onOpenMoments: () => void;
+  onOpenMomentDetail: (detail: 'excited' | 'anxious') => void;
   onOpenPlan: () => void;
   onOpenWilo: () => void;
   onOpenGoalAnalysis: () => void;
@@ -14,14 +20,10 @@ type HomePageProps = {
   onCloseGoalAnalysis: () => void;
 };
 
-const homeHeroBars = [
-  27, 15, 18, 10, 15, 9, 10, 17, 13, 17, 24, 15,
-  17, 13, 11, 15, 20, 17, 18, 22, 17, 11, 17, 22,
-  24, 14, 17, 10, 9, 3, 8, 8, 6, 3, 8, 7,
-];
-
 export function HomePage({
+  isFirstVisit = true,
   onOpenMoments,
+  onOpenMomentDetail,
   onOpenPlan,
   onOpenWilo,
   onOpenGoalAnalysis,
@@ -29,7 +31,7 @@ export function HomePage({
   onCloseGoalAnalysis,
 }: HomePageProps) {
   return (
-    <main className="app-shell app-shell--home-dark">
+    <main className={`app-shell app-shell--home-dark${isFirstVisit ? ' app-shell--first-visit' : ''}`}>
       <section className="phone-frame phone-frame--home-dark">
         <div className="phone-scroll phone-scroll--home-dark">
             <section className="home-dark-hero">
@@ -37,7 +39,7 @@ export function HomePage({
               <div className="home-dark-hero__header">
                 <div className="home-dark-profile">
                   <img className="home-dark-profile__avatar" src={ellipseIcon} alt="" aria-hidden="true" />
-                  <strong>Hi, Leo</strong>
+                  <strong className="home-dark-profile__label">Hi, Leo</strong>
                 </div>
 
                 <div className="home-dark-date-pill" aria-label="当前日期 28">
@@ -47,21 +49,54 @@ export function HomePage({
 
               <div className="home-dark-card-cluster">
                 <div className="home-dark-stack">
-                  <div className="home-dark-stack__card home-dark-stack__card--anger">
+                  <button
+                    type="button"
+                    className="home-dark-stack__card home-dark-stack__card--anger"
+                    onClick={() => onOpenMomentDetail('anxious')}
+                    aria-label="查看愤怒详情"
+                  >
                     <div className="home-dark-stack__thumb" />
                     <div className="home-dark-stack__meta">
                       <strong>愤怒</strong>
                       <span>12:00-14:00</span>
                     </div>
-                  </div>
+                  </button>
 
-                  <div className="home-dark-stack__card home-dark-stack__card--anxiety">
-                    <div className="home-dark-stack__thumb" />
-                    <div className="home-dark-stack__meta">
-                      <strong>焦虑</strong>
-                      <span>12:00-14:00</span>
+                  <button
+                    type="button"
+                    className="home-dark-stack__card home-dark-stack__card--anxiety"
+                    onClick={() => onOpenMomentDetail('anxious')}
+                    aria-label="查看焦虑详情"
+                  >
+                    <div className="home-dark-stack__image-wrap">
+                      <img
+                        className="home-dark-stack__image"
+                        src={anxiousImage}
+                        alt="焦虑时刻"
+                      />
                     </div>
-                  </div>
+                    <div className="home-dark-stack__body">
+                      <div className="home-dark-stack__meta">
+                        <strong>焦虑</strong>
+                        <span>12:00-14:00</span>
+                      </div>
+<div className="home-dark-stack__wave" aria-hidden="true">
+                      <WaveBars
+                        className="wave-bars--home-stack-anxious"
+                        height={24}
+                        gap={1}
+                        minBarWidth={1}
+                        bars={homeStackAnxiousBars}
+                        animated
+                        animationDuration={1480}
+                        animationDelay={900}
+                        backgroundColor="#808383"
+                        borderRadius={1}
+                        barDepth={0.42}
+                      />
+                    </div>
+                    </div>
+                  </button>
                 </div>
 
                 <button
@@ -94,14 +129,17 @@ export function HomePage({
 
                     <div className="home-dark-wave" aria-hidden="true">
                       <WaveBars
-                        bars={homeHeroBars}
+                        className="wave-bars--home-hero-excited"
                         height={28}
-                        fillWidth
-                        accentStart={18}
-                        accentEnd={35}
-                        accentColor="rgba(216, 223, 222, 0.72)"
-                        backgroundColor="rgba(128, 131, 131, 0.5)"
+                        gap={1}
+                        minBarWidth={1}
+                        bars={homeHeroExcitedBars}
+                        animated
+                        animationDuration={1620}
+                        animationDelay={1180}
+                        backgroundColor="#808383"
                         borderRadius={1}
+                        barDepth={0.5}
                       />
                     </div>
 
@@ -131,7 +169,7 @@ export function HomePage({
                   <div className="home-dark-panel__progress-group">
                     <span>连续 14天</span>
                     <div className="home-dark-progress" aria-hidden="true">
-                      <span style={{ width: '62%' }} />
+                      <span className="home-dark-progress__fill" style={{ '--progress-width': '62%' } as React.CSSProperties} />
                     </div>
                   </div>
                 </div>
@@ -156,9 +194,8 @@ export function HomePage({
         </div>
 
         <HomeFloatingBar
-          tone="dark"
           className="home-floating-bar--moments-dark"
-          leftTab={{ label: '主页', icon: 'home', active: true }}
+          leftTab={{ label: '主页', icon: 'home' }}
           rightTab={{ label: '计划', icon: 'plan', onClick: onOpenPlan }}
         />
 

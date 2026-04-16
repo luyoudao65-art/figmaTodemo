@@ -87,6 +87,32 @@ export function InflammationWarningIcon() {
   );
 }
 
+export function BedtimeIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" className="icon icon--feature" aria-hidden="true">
+      <path
+        d="M5.33325 18.6667H26.6666V26.6667M5.33325 26.6667V13.3333C5.33325 11.8606 6.52716 10.6667 7.99992 10.6667H15.9999C17.4727 10.6667 18.6666 11.8606 18.6666 13.3333V18.6667M18.6666 14.6667H23.9999C25.4727 14.6667 26.6666 15.8606 26.6666 17.3333V18.6667M9.33325 14.6667H14.6666"
+        stroke="#242A29"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ExerciseBallIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" className="icon icon--feature" aria-hidden="true">
+      <circle cx="16" cy="16" r="11.2" stroke="#242A29" strokeWidth="2.4" />
+      <path d="M16 4.8C19.0666 8.35584 20.6 12.0892 20.6 16C20.6 19.9108 19.0666 23.6442 16 27.2" stroke="#242A29" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M4.8 16H27.2" stroke="#242A29" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M8.7 9.8C10.5333 11.1333 12.9667 11.8 16 11.8C19.0333 11.8 21.4667 11.1333 23.3 9.8" stroke="#242A29" strokeWidth="2" strokeLinecap="round" />
+      <path d="M8.7 22.2C10.5333 20.8667 12.9667 20.2 16 20.2C19.0333 20.2 21.4667 20.8667 23.3 22.2" stroke="#242A29" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function MealAdviceActionIcon() {
   return (
     <svg viewBox="0 0 28 28" className="icon" aria-hidden="true">

@@ -1,0 +1,45 @@
+第二张卡片
+display: flex;
+width: 300px;
+height: 496px;
+transform: rotate(5deg);
+flex-direction: column;
+justify-content: center;
+align-items: flex-end;
+gap: var(--R40, 12px);
+
+position: absolute;
+right: -17.044px;
+bottom: -76.259px;
+
+border-radius: var(--R80, 32px);
+border: 1px solid #515857;
+background: var(--Broom-800, #6F5011);
+
+/* 模糊加阴影 */
+box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+backdrop-filter: blur(2px);
+
+第三张
+
+display: flex;
+width: 300px;
+height: 496px;
+transform: rotate(15deg);
+flex-direction: column;
+justify-content: center;
+align-items: flex-end;
+gap: var(--R40, 12px);
+
+position: absolute;
+right: -72.152px;
+bottom: -126.745px;
+
+border-radius: var(--R80, 32px);
+border: 1px solid #515857;
+opacity: 0.4;
+background: var(--Cherry-Soda-800, #67250E);
+
+/* 模糊加阴影 */
+box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+backdrop-filter: blur(2px);

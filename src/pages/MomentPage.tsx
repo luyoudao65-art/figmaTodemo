@@ -11,9 +11,31 @@ import stairIcon from '../icons/stair.svg';
 import personOne from '../pic/people/Rectangle_279336331_2x.webp';
 import personTwo from '../pic/people/Rectangle_279336332_2x.webp';
 import personThree from '../pic/people/Rectangle_279336333_2x.webp';
+import type { GeneratedPlanScenario } from '../types/generatedPlan';
 
 const relatedPeople = [personOne, personTwo, personThree];
 const momentDayPeople = relatedPeople;
+const momentDetailExcitedBars = [14, 16, 18, 16, 14, 17, 19, 16, 14, 18, 22, 26, 30, 36, 44, 56, 60, 58, 76, 84, 78, 68, 76, 62, 50, 56, 62, 58, 62, 66, 62, 50, 40, 32, 26, 22, 18, 16, 14, 13, 12, 11];
+const momentDetailExcitedBarColors = [
+  '#79807f', '#848b8a', '#8f9695', '#727978', '#8a9190', '#747b7a', '#7d8483',
+  '#8e9594', '#7d8483', '#8b9291', '#787f7e', '#979e9d', '#a3aaa9', '#c4cbca',
+  '#dbe2e1', '#c8cfce',
+  '#b4bbba', '#cfd6d5', '#dce3e2', '#edf3f2', '#ffffff', '#dde4e3', '#bcc3c2',
+  '#e2e9e8', '#858c8b', '#969d9c', '#d8dfde', '#e8efee', '#8b9291', '#acb3b2',
+  '#6b7271', '#878e8d', '#8a9190', '#656c6b', '#fafdfc', '#e5eceb', '#d3dad9',
+  '#ffffff', '#e7eeed', '#ffffff', '#cad1d0', '#ffffff',
+];
+const momentDetailAnxiousBars = [12, 14, 12, 10, 14, 16, 13, 10, 14, 16, 20, 24, 22, 18, 16, 20, 24, 28, 26, 22, 26, 30, 36, 42, 54, 68, 70, 76, 74, 84, 88, 66, 74, 78, 54, 46, 30, 22, 16, 14, 12];
+const momentDetailAnxiousBarColors = [
+  '#79807f', '#848b8a', '#8f9695', '#727978', '#8a9190', '#747b7a', '#7d8483',
+  '#8e9594', '#7d8483', '#8b9291', '#787f7e', '#979e9d', '#a3aaa9', '#c4cbca',
+  '#dbe2e1', '#c8cfce',
+  '#b4bbba', '#cfd6d5', '#dce3e2', '#edf3f2', '#ffffff', '#dde4e3', '#bcc3c2',
+  '#e2e9e8', '#858c8b', '#969d9c', '#d8dfde', '#e8efee', '#8b9291', '#acb3b2',
+  '#6b7271', '#878e8d', '#8a9190', '#656c6b', '#fafdfc', '#e5eceb', '#d3dad9',
+  '#ffffff', '#e7eeed', '#ffffff', '#cad1d0', '#ffffff',
+];
+const momentDayExcitedBars = [11, 10, 12, 14, 17, 20, 22, 24, 23, 22, 20, 18, 16, 15, 17, 12, 14, 15, 14, 16, 14, 17, 18, 20, 19, 18, 16, 14];
 
 const periodSegments = [
   { color: '#A3E9B2', grow: 58, label: '兴奋30%', labelColor: '#21612C' },
@@ -39,10 +61,6 @@ const momentDayDates = [
   { weekday: '七', label: '29', active: false },
 ];
 
-const dayTimelineBars = [18, 22, 15, 31, 38, 24, 45, 58, 50, 35, 28, 20, 16, 12, 10, 8, 9, 7, 11, 10, 8, 6, 9, 8];
-const excitedDetailBars = [16, 22, 28, 35, 52, 68, 75, 82, 78, 65, 48, 38, 28, 24, 18, 15, 12, 14, 18, 22, 20, 16, 14, 12];
-const anxiousDetailBars = [32, 28, 35, 42, 38, 32, 28, 24, 32, 48, 62, 78, 88, 95, 98, 95, 88, 72, 58, 45, 38, 32, 28, 24, 18, 15, 12, 10, 8, 6];
-
 type DetailKind = 'excited' | 'anxious' | null;
 
 type MomentPageProps = {
@@ -55,7 +73,7 @@ type MomentPageProps = {
   onOpenPlan: () => void;
   onOpenWiloSuggest: () => void;
   onCloseOverlay: () => void;
-  onConfirmPlan: () => void;
+  onConfirmPlan: (scenario?: GeneratedPlanScenario) => void;
   onOpenFriendMemory: (detail: Exclude<DetailKind, null>) => void;
 };
 
@@ -93,15 +111,23 @@ export function MomentPage({
               imageAlt="游泳运动时刻"
               description="今天完成了1小时游泳运动，有效提升了心肺耐力与全身代谢水平，心率区间稳定，无过度疲劳风险。这是你近期第2次和Grace结伴游泳。"
               onBack={() => setSelectedDetail(null)}
-              emotion="excited"
+emotion="excited"
               chart={
-                <WaveBars
-                  bars={excitedDetailBars}
-                  height={100}
-                  fillWidth
-                  accentStart={4}
-                  accentEnd={12}
-                  accentColor="#79d890"
+<WaveBars
+                  className="wave-bars--moment-detail-excited"
+                  emotion="excited"
+                  minBarWidth={0.3}
+                  gap={2.3}
+                  bars={momentDetailExcitedBars}
+                  barColors={momentDetailExcitedBarColors}
+                  accentStart={16}
+                  accentEnd={24}
+                  accentColor="linear-gradient(180deg, #B8FFBA 0%, #89F09D 55%, #60C57B 100%)"
+                  backgroundColor="#9ea5a4"
+                  borderRadius={1}
+                  animated={true}
+                  animationDuration={5000}
+                  style={{ marginTop: '20px' }}
                 />
               }
               accessory={
@@ -114,7 +140,7 @@ export function MomentPage({
           ) : isAnxiousDetailOpen ? (
             <MomentDetailView
               title="焦虑"
-              time="14:30-15:00"
+              time="10:00-11:00"
               imageSrc={anxiousImage}
               imageAlt="交流中的焦虑时刻"
               description="检测到心率上升过快，皮质醇水平上升，呼吸变浅快，注意力难以集中。放轻松，已为你自动语音记录，不错过任何重点信息。"
@@ -122,13 +148,21 @@ export function MomentPage({
               onBack={() => setSelectedDetail(null)}
               emotion="anxious"
               chart={
-                <WaveBars
-                  bars={anxiousDetailBars}
-                  height={120}
-                  fillWidth
-                  accentStart={10}
-                  accentEnd={17}
-                  accentColor="#f0ac98"
+<WaveBars
+                  className="wave-bars--moment-detail-anxious"
+                  emotion="anxious"
+                  minBarWidth={0.3}
+                  gap={2.3}
+                  bars={momentDetailAnxiousBars}
+                  barColors={momentDetailAnxiousBarColors}
+                  accentStart={24}
+                  accentEnd={31}
+                  accentColor="linear-gradient(180deg, #FF914D 0%, #FF6B1F 55%, #F25214 100%)"
+                  backgroundColor="#9ea5a4"
+                  borderRadius={1}
+                  animated={true}
+                  animationDuration={5000}
+                  style={{ marginTop: '20px' }}
                 />
               }
               accessory={
@@ -258,7 +292,16 @@ function MomentDayScreen({
             </div>
 
             <div className="moment-day-card__chart">
-              <WaveBars bars={dayTimelineBars} fillWidth backgroundColor="rgba(255, 255, 255, 0.52)" />
+              <WaveBars
+                className="wave-bars--moment-day-excited"
+                height={24}
+                gap={1.5}
+                minBarWidth={0.8}
+                bars={momentDayExcitedBars}
+                backgroundColor="#808383"
+                borderRadius={1}
+                barDepth={0.5}
+              />
             </div>
           </div>
         </button>
@@ -424,4 +467,3 @@ function WeekEnergyBar() {
     </div>
   );
 }
-

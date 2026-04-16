@@ -47,6 +47,13 @@ Use this skill when the task is to add or modify a Figma-derived page, section, 
 - Match layout, spacing, corner radius, visual layering, and typography closely.
 - Preserve the same taste as Figma, not just the same information.
 - Use realistic mock content from the design.
+- Default to subtle motion rather than a fully static page. Prefer:
+  - a staged entry sequence for major hero or card elements when the screen first appears
+  - low-amplitude ambient motion after settle such as soft breathing, slow drift, mild shadow or background shifts, or gentle icon/pulse movement
+  - durations that are readable and calm rather than flashy or abrupt
+  - animations that support demo quality without competing with the content
+- Keep motion tasteful and restrained. Avoid constant busy movement, fast looping effects, or motion that makes the UI feel game-like unless the design clearly calls for it.
+- Add motion in reusable CSS patterns when possible so future screens can inherit the same demo polish instead of re-inventing one-off animations.
 - Do not introduce backend endpoints or fake architecture.
 - Avoid over-abstraction for one-off parts of a screen.
 - If a screen is driven by an existing component, adapt that component instead of duplicating it.
@@ -85,6 +92,7 @@ Before finishing:
 The result should feel good in a demo recording:
 
 - transitions and state changes feel intentional
+- major surfaces do not feel lifeless after load; there is a light sense of breathing or ambient motion where appropriate
 - inactive and active nav states are visually clear
 - no obviously placeholder-looking content
 - the page still looks coherent on the target mobile frame

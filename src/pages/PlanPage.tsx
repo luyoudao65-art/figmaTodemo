@@ -1,6 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { BottomTabNav } from '../components/BottomTabNav';
 import {
+  BedtimeIcon,
+  ExerciseBallIcon,
+  FragmentExerciseIcon,
   InflammationWarningActionIcon,
   InflammationWarningIcon,
   MealAdviceIcon,
@@ -8,10 +12,13 @@ import {
   TargetPlanIcon,
 } from '../components/FeatureIcons';
 import treeImage from '../pic/FigmaPic/tree.webp';
+import type { GeneratedPlanIcon, GeneratedPlanSuggestion } from '../types/generatedPlan';
 
 type PlanPageProps = {
   variant?: 'default' | 'new-plan';
-  showPhoneLimit?: boolean;
+  generatedPlansByDate?: Record<string, GeneratedPlanSuggestion[]>;
+  recentGeneratedPlanKeys?: string[];
+  initialActiveDate?: string;
   onGoHome: () => void;
 };
 
@@ -22,10 +29,10 @@ const weekDates = [
   { day: '四', date: '27' },
   { day: '五', date: '28' },
   { day: '六', date: '29', active: true },
-  { day: '七', date: '29' },
+  { day: '日', date: '30' },
 ];
 
-const planGroups = [
+const basePlanGroups = [
   {
     key: 'in-progress',
     label: '16:00-16:30 进行中',
@@ -66,29 +73,6 @@ const planGroups = [
     ],
   },
   {
-    key: 'new-plan',
-    label: '22:30',
-    entries: [
-      {
-        key: 'phone-limit',
-        tone: 'icon' as const,
-        title: '远离手机',
-        description: '晚10:30后无法打开除必要通讯工作软件外其他软件',
-        icon: <PhoneLimitIcon />,
-        hasAlert: true,
-        footer: (
-          <button type="button" className="goal-inline-action goal-inline-action--plan">
-            <span>自动设定对应闹钟/日程</span>
-            <span className="goal-inline-action__hint">
-              去授权
-              <ChevronRightMini />
-            </span>
-          </button>
-        ),
-      },
-    ],
-  },
-  {
     key: 'done',
     label: '已完成',
     entries: [
@@ -106,16 +90,62 @@ const planGroups = [
 
 export function PlanPage({
   variant = 'default',
-  showPhoneLimit = false,
+  generatedPlansByDate = {},
+  recentGeneratedPlanKeys = [],
+  initialActiveDate = '29',
   onGoHome,
 }: PlanPageProps) {
   const highlightRef = useRef<HTMLDivElement | null>(null);
+  const [activeDate, setActiveDate] = useState(initialActiveDate);
+
+  useEffect(() => {
+    setActiveDate(initialActiveDate);
+  }, [initialActiveDate]);
 
   useEffect(() => {
     if (variant === 'new-plan') {
       highlightRef.current?.scrollIntoView({ block: 'center' });
     }
   }, [variant]);
+
+  const generatedPlans = (generatedPlansByDate[activeDate] ?? []).slice().sort(
+    (left, right) => (left.sortMinutes ?? 0) - (right.sortMinutes ?? 0)
+  );
+  const generatedPlanGroups = generatedPlans.map((plan) => ({
+    key: `generated-group-${getGeneratedPlanKey(plan)}`,
+    label: plan.timeLabel,
+    entries: [
+      {
+        key: getGeneratedPlanKey(plan),
+        tone: 'icon' as const,
+        title: plan.title,
+        description: plan.description,
+        icon: renderGeneratedPlanIcon(plan.icon),
+        hasAlert: plan.hasAlert,
+        footer: plan.footerText && plan.footerActionLabel ? (
+          <button type="button" className="goal-inline-action goal-inline-action--plan">
+            <span>{plan.footerText}</span>
+            <span className="goal-inline-action__hint">
+              {plan.footerActionLabel}
+              <ChevronRightMini />
+            </span>
+          </button>
+        ) : undefined,
+      },
+    ],
+  }));
+
+  const displayedPlanGroups =
+    activeDate === '30'
+      ? generatedPlanGroups
+      : [
+          ...basePlanGroups.slice(0, 3),
+          ...generatedPlanGroups,
+          ...basePlanGroups.slice(3),
+        ];
+  const firstRecentGroupKey = displayedPlanGroups.find((group) =>
+    group.entries.some((entry) => recentGeneratedPlanKeys.includes(entry.key))
+  )?.key;
 
   return (
     <main className="app-shell app-shell--moment-dark">
@@ -133,7 +163,8 @@ export function PlanPage({
                 <button
                   key={`${item.day}-${item.date}`}
                   type="button"
-                  className={`plan-date-pill${item.active ? ' plan-date-pill--active' : ''}`}
+                  className={`plan-date-pill${item.date === activeDate ? ' plan-date-pill--active' : ''}`}
+                  onClick={() => setActiveDate(item.date)}
                 >
                   <span>{item.day}</span>
                   <strong>{item.date}</strong>
@@ -147,11 +178,11 @@ export function PlanPage({
               </div>
 
               <div className="plan-timeline__content">
-                {planGroups.filter(group => group.key !== 'new-plan' || showPhoneLimit).map((group) => (
+                {displayedPlanGroups.length ? displayedPlanGroups.map((group, groupIndex) => (
                   <div
                     key={group.key}
                     className="plan-card-group"
-                    ref={group.key === 'new-plan' ? highlightRef : undefined}
+                    ref={variant === 'new-plan' && group.key === firstRecentGroupKey ? highlightRef : undefined}
                   >
                     <p
                       className={
@@ -163,14 +194,15 @@ export function PlanPage({
                       {group.label}
                     </p>
 
-                    {group.subLabel ? (
+                    {'subLabel' in group && group.subLabel ? (
                       <p className="plan-card-group__sub-label">{group.subLabel}</p>
                     ) : null}
 
                     {group.entries.map((entry) => (
                       <article
                         key={entry.key}
-                        className={`plan-entry-card${entry.tone === 'image' ? ' plan-entry-card--image' : ''}${variant === 'new-plan' && entry.key === 'phone-limit' ? ' plan-entry-card--highlighted' : ''}`}
+                        className={`plan-entry-card${entry.tone === 'image' ? ' plan-entry-card--image' : ''}${variant === 'new-plan' && recentGeneratedPlanKeys.includes(entry.key) ? ' plan-entry-card--highlighted plan-entry-card--generated-insert' : ''}`}
+                        style={variant === 'new-plan' && recentGeneratedPlanKeys.includes(entry.key) ? ({ '--plan-insert-delay': `${groupIndex * 120}ms` } as CSSProperties) : undefined}
                       >
                         {entry.tone === 'image' ? (
                           <div className="plan-entry-card__image-shell">
@@ -216,18 +248,36 @@ export function PlanPage({
                                 </div>
                                 {'trailing' in entry && entry.trailing ? (
                                   <div className="goal-card__trailing" aria-hidden="true">
-                                    {entry.trailing}
+                                    {entry.trailing as ReactNode}
                                   </div>
                                 ) : null}
                               </div>
-                              {"footer" in entry && entry.footer}
+                              {('footer' in entry ? entry.footer : null) as ReactNode}
                             </div>
                           </>
                         )}
                       </article>
                     ))}
                   </div>
-                ))}
+                )) : (
+                  <div className="plan-card-group">
+                    <p className="plan-card-group__label">周日 30</p>
+                    <article className="plan-entry-card plan-entry-card--empty">
+                      <div className="goal-card plan-card plan-card--dark">
+                        <div className="goal-card__content">
+                          <div className="goal-card__text">
+                            <h3>
+                              <span className="plan-card__title-row">
+                                <span className="plan-card__title-text">还没有同步进来的计划</span>
+                              </span>
+                            </h3>
+                            <p>从 Wilo 分析里导入飞书或日历安排后，这里会按时间自动排好。</p>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                )}
               </div>
             </section>
           </div>
@@ -237,6 +287,19 @@ export function PlanPage({
       </section>
     </main>
   );
+}
+
+function renderGeneratedPlanIcon(icon: GeneratedPlanIcon) {
+  if (icon === 'target-plan') return <TargetPlanIcon />;
+  if (icon === 'meal-advice') return <MealAdviceIcon />;
+  if (icon === 'fragment-exercise') return <FragmentExerciseIcon />;
+  if (icon === 'bedtime') return <BedtimeIcon />;
+  if (icon === 'exercise-ball') return <ExerciseBallIcon />;
+  return <PhoneLimitIcon />;
+}
+
+function getGeneratedPlanKey(plan: GeneratedPlanSuggestion) {
+  return `${plan.templateId}-${plan.timeLabel}-${plan.title}`;
 }
 
 function ChevronRightMini() {

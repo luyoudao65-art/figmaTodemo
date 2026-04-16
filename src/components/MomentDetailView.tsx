@@ -54,7 +54,9 @@ export function MomentDetailView({
             </div>
           </div>
 
-          {chart}
+          <div className={`moment-detail-card__chart${emotion ? ` moment-detail-card__chart--${emotion}` : ''}`}>
+            {chart}
+          </div>
 
           {accessory}
 

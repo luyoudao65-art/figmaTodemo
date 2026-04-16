@@ -4,10 +4,6 @@ const config: CapacitorConfig = {
   appId: 'com.figmatodemo.app',
   appName: 'Figma To Demo',
   webDir: 'dist',
-  server: {
-    androidScheme: 'https',
-    cleartext: true,
-  },
 };
 
 export default config;

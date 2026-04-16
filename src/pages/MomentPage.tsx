@@ -5,23 +5,15 @@ import { MomentDetailView } from '../components/MomentDetailView';
 import { RelatedPeopleButton } from '../components/RelatedPeopleButton';
 import { WiloAnalysisSheet } from '../components/WiloAnalysisSheet';
 import { WaveBars } from '../components/WaveBars';
+import excitedImage from '../pic/FigmaPic/moment.png';
+import anxiousImage from '../pic/FigmaPic/peopletalking.webp';
+import stairIcon from '../icons/stair.svg';
+import personOne from '../pic/people/Rectangle_279336331_2x.webp';
+import personTwo from '../pic/people/Rectangle_279336332_2x.webp';
+import personThree from '../pic/people/Rectangle_279336333_2x.webp';
 
-
-const excitedImage = '/src/pic/FigmaPic/moment.png';
-const anxiousImage = '/src/pic/FigmaPic/peopletalking.webp';
-const stairIcon = '/src/icons/stair.svg';
-
-const momentDayPeople = [
-  'https://www.figma.com/api/mcp/asset/f0b4282d-597f-40e9-b329-561b9bd8bb1c',
-  'https://www.figma.com/api/mcp/asset/1e818a18-3143-4f2f-83bf-a57035249b86',
-  'https://www.figma.com/api/mcp/asset/f097043c-08a9-4370-a879-c891887918e9',
-];
-
-const relatedPeople = [
-  '/src/pic/people/Rectangle_279336331_2x.webp',
-  '/src/pic/people/Rectangle_279336332_2x.webp',
-  '/src/pic/people/Rectangle_279336333_2x.webp',
-];
+const relatedPeople = [personOne, personTwo, personThree];
+const momentDayPeople = relatedPeople;
 
 const periodSegments = [
   { color: '#A3E9B2', grow: 58, label: '兴奋30%', labelColor: '#21612C' },
@@ -432,5 +424,4 @@ function WeekEnergyBar() {
     </div>
   );
 }
-
 

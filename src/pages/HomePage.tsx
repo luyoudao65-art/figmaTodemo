@@ -1,6 +1,9 @@
 import { WiloAnalysisSheet } from '../components/WiloAnalysisSheet';
 import { HomeFloatingBar } from '../components/HomeFloatingBar';
 import { WaveBars } from '../components/WaveBars';
+import homeCardImage from '../pic/FigmaPic/moment.png';
+import ellipseIcon from '../icons/Ellipse 3258.svg';
+import stairIcon from '../icons/stair.svg';
 
 type HomePageProps = {
   onOpenMoments: () => void;
@@ -10,10 +13,6 @@ type HomePageProps = {
   goalAnalysisOpen?: boolean;
   onCloseGoalAnalysis: () => void;
 };
-
-const homeCardImage = '/src/pic/FigmaPic/moment.png';
-const ellipseIcon = '/src/icons/Ellipse 3258.svg';
-const stairIcon = '/src/icons/stair.svg';
 
 const homeHeroBars = [
   27, 15, 18, 10, 15, 9, 10, 17, 13, 17, 24, 15,

@@ -1,4 +1,8 @@
 import { BottomTabNav } from '../components/BottomTabNav';
+import groupCardImage from '../pic/FigmaPic/cardgroup.webp';
+import personOne from '../pic/people/Rectangle_279336331_2x.webp';
+import personTwo from '../pic/people/Rectangle_279336332_2x.webp';
+import personThree from '../pic/people/Rectangle_279336333_2x.webp';
 
 type FriendMemoryPageProps = {
   onBack: () => void;
@@ -6,12 +10,7 @@ type FriendMemoryPageProps = {
   onOpenPlan: () => void;
 };
 
-const groupCardImage = '/src/pic/FigmaPic/cardgroup.webp';
-const friendPeople = [
-  '/src/pic/people/Rectangle_279336331_2x.webp',
-  '/src/pic/people/Rectangle_279336332_2x.webp',
-  '/src/pic/people/Rectangle_279336333_2x.webp',
-];
+const friendPeople = [personOne, personTwo, personThree];
 
 const memoryCards = [
   {

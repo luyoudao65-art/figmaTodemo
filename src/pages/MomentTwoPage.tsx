@@ -2,7 +2,10 @@ import { BottomTabNav } from '../components/BottomTabNav';
 import { MomentDetailView } from '../components/MomentDetailView';
 import { RelatedPeopleButton } from '../components/RelatedPeopleButton';
 import { WaveBars } from '../components/WaveBars';
-
+import anxietyMomentImage from '../pic/FigmaPic/peopletalking.webp';
+import personOne from '../pic/people/Rectangle_279336331_2x.webp';
+import personTwo from '../pic/people/Rectangle_279336332_2x.webp';
+import personThree from '../pic/people/Rectangle_279336333_2x.webp';
 
 type MomentTwoPageProps = {
   onBack: () => void;
@@ -11,12 +14,7 @@ type MomentTwoPageProps = {
   onOpenFriendMemory: () => void;
 };
 
-const anxietyMomentImage = '/src/pic/FigmaPic/peopletalking.webp';
-const peopleImages = [
-  '/src/pic/people/Rectangle_279336331_2x.webp',
-  '/src/pic/people/Rectangle_279336332_2x.webp',
-  '/src/pic/people/Rectangle_279336333_2x.webp',
-];
+const peopleImages = [personOne, personTwo, personThree];
 
 const anxiousDetailBars = [32, 28, 35, 42, 38, 32, 28, 24, 32, 48, 62, 78, 88, 95, 98, 95, 88, 72, 58, 45, 38, 32, 28, 24, 18, 15, 12, 10, 8, 6];
 

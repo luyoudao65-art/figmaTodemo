@@ -7,7 +7,7 @@ import {
   PhoneLimitIcon,
   TargetPlanIcon,
 } from '../components/FeatureIcons';
-
+import treeImage from '../pic/FigmaPic/tree.webp';
 
 type PlanPageProps = {
   variant?: 'default' | 'new-plan';
@@ -15,7 +15,6 @@ type PlanPageProps = {
   onGoHome: () => void;
 };
 
-const treeImage = '/src/pic/FigmaPic/tree.webp';
 const weekDates = [
   { day: '一', date: '24' },
   { day: '二', date: '25' },

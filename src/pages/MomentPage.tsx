@@ -15,7 +15,7 @@ import type { GeneratedPlanScenario } from '../types/generatedPlan';
 
 const relatedPeople = [personOne, personTwo, personThree];
 const momentDayPeople = relatedPeople;
-const momentDetailExcitedBars = [14, 16, 18, 16, 14, 17, 19, 16, 14, 18, 22, 26, 30, 36, 44, 56, 60, 58, 76, 84, 78, 68, 76, 62, 50, 56, 62, 58, 62, 66, 62, 50, 40, 32, 26, 22, 18, 16, 14, 13, 12, 11];
+const momentDetailExcitedBars = [35, 46, 48, 36, 33, 27, 39, 46, 34, 38, 29, 26, 34, 36, 44, 56, 60, 58, 73, 77, 71, 68, 66, 62, 50, 56, 62, 58, 62, 66, 62, 50, 40, 32, 28, 32, 28, 26, 25, 18, 20, 19];
 const momentDetailExcitedBarColors = [
   '#79807f', '#848b8a', '#8f9695', '#727978', '#8a9190', '#747b7a', '#7d8483',
   '#8e9594', '#7d8483', '#8b9291', '#787f7e', '#979e9d', '#a3aaa9', '#c4cbca',
@@ -25,7 +25,7 @@ const momentDetailExcitedBarColors = [
   '#6b7271', '#878e8d', '#8a9190', '#656c6b', '#fafdfc', '#e5eceb', '#d3dad9',
   '#ffffff', '#e7eeed', '#ffffff', '#cad1d0', '#ffffff',
 ];
-const momentDetailAnxiousBars = [12, 14, 12, 10, 14, 16, 13, 10, 14, 16, 20, 24, 22, 18, 16, 20, 24, 28, 26, 22, 26, 30, 36, 42, 54, 68, 70, 76, 74, 84, 88, 66, 74, 78, 54, 46, 30, 22, 16, 14, 12];
+const momentDetailAnxiousBars = [16, 24, 32, 33, 24, 16, 23, 30, 24, 26, 25, 24, 27, 28, 26, 20, 24, 28, 36, 24, 26, 30, 36, 42, 53, 61, 67, 56, 66, 75, 68, 66, 44, 58, 47, 36, 30, 22, 16, 14, 12];
 const momentDetailAnxiousBarColors = [
   '#79807f', '#848b8a', '#8f9695', '#727978', '#8a9190', '#747b7a', '#7d8483',
   '#8e9594', '#7d8483', '#8b9291', '#787f7e', '#979e9d', '#a3aaa9', '#c4cbca',
@@ -35,7 +35,7 @@ const momentDetailAnxiousBarColors = [
   '#6b7271', '#878e8d', '#8a9190', '#656c6b', '#fafdfc', '#e5eceb', '#d3dad9',
   '#ffffff', '#e7eeed', '#ffffff', '#cad1d0', '#ffffff',
 ];
-const momentDayExcitedBars = [11, 10, 12, 14, 17, 20, 22, 24, 23, 22, 20, 18, 16, 15, 17, 12, 14, 15, 14, 16, 14, 17, 18, 20, 19, 18, 16, 14];
+const momentDayExcitedBars = [18, 20, 16, 14, 17, 20, 22, 24, 23, 22, 20, 18, 16, 15, 17, 15, 14, 15, 14, 16, 14, 17, 18, 20, 19, 18, 16, 14];
 
 const periodSegments = [
   { color: '#A3E9B2', grow: 58, label: '兴奋30%', labelColor: '#21612C' },
@@ -251,7 +251,7 @@ function MomentDayScreen({
         </div>
 
         <p className="moment-dark-summary__text">
-          今天你的情绪经历了几次明显起伏，运动带来短暂兴奋，但整体恢复节律还不够稳定。
+          你今天游泳1小时身心受益，但下午焦虑、晚间愤怒累积压力，建议提早休息以平复情绪，保证睡眠质量以恢复身心平衡。
         </p>
 
         <button type="button" className="moment-dark-summary__cta" onClick={onOpenWiloSuggest}>
@@ -294,9 +294,9 @@ function MomentDayScreen({
             <div className="moment-day-card__chart">
               <WaveBars
                 className="wave-bars--moment-day-excited"
-                height={24}
-                gap={1.5}
-                minBarWidth={0.8}
+                height={15}
+                gap={2.3}
+                minBarWidth={0.4}
                 bars={momentDayExcitedBars}
                 backgroundColor="#808383"
                 borderRadius={1}
@@ -393,7 +393,7 @@ function MomentMonthScreen({
 function MomentSwitcher({
   active,
   onOpenDay,
-  onOpenMonth,
+  onOpenMonth: _onOpenMonth,
 }: {
   active: 'day' | 'month';
   onOpenDay: () => void;
@@ -419,7 +419,8 @@ function MomentSwitcher({
       <button
         type="button"
         className={`moment-switch${active === 'month' ? ' moment-switch--active' : ''}`}
-        onClick={onOpenMonth}
+        disabled
+        aria-disabled="true"
       >
         月
       </button>

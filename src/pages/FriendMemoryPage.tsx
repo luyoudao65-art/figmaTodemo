@@ -18,7 +18,7 @@ const memoryCards = [
     avatar: friendPeople[0],
     segments: [
       { color: '#a6e7b6', width: '30%', label: '兴奋30%' },
-      { color: '#c8d8f3', width: '50%' },
+      { color: '#c8d8f3', width: '50%', label: '平静50%' },
       { color: '#efb7a6', width: '20%' },
     ],
   },

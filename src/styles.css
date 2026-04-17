@@ -3761,7 +3761,7 @@ button {
 
 .app-shell--first-visit .home-dark-moment-card {
   animation:
-    home-card-fly-in-front 1960ms cubic-bezier(0.18, 0.94, 0.2, 1) 920ms both,
+    home-card-fly-in-front 1960ms cubic-bezier(0.18, 0.94, 0.2, 1) 1500ms both,
     home-card-shadow-breathe-front 10.8s ease-in-out 3s infinite,
     home-card-color-breathe-front 14.4s ease-in-out 3.15s infinite;
 }
@@ -3790,12 +3790,12 @@ button {
 }
 
 .app-shell--first-visit .home-dark-stack__card--anxiety {
-  animation: home-card-fly-in-anxiety 1s cubic-bezier(0.22, 1, 0.36, 1) 800ms forwards;
+  animation: home-card-fly-in-anxiety 1s cubic-bezier(0.22, 1, 0.36, 1) 1500ms forwards;
 }
 
 .app-shell--first-visit .home-dark-moment-card {
   animation:
-    home-card-fly-in-front 1960ms cubic-bezier(0.18, 0.94, 0.2, 1) 800ms both,
+    home-card-fly-in-front 1960ms cubic-bezier(0.18, 0.94, 0.2, 1) 1500ms both,
     home-card-shadow-breathe-front 10.8s ease-in-out 3s infinite,
     home-card-color-breathe-front 14.4s ease-in-out 3.15s infinite;
 }
@@ -3805,12 +3805,12 @@ button {
 }
 
 .app-shell--first-visit .home-dark-panel {
-  animation: home-soft-rise 1160ms cubic-bezier(0.18, 0.9, 0.24, 1) 1640ms both;
+  animation: home-soft-rise 1160ms cubic-bezier(0.18, 0.9, 0.24, 1) 2340ms both;
 }
 
 .app-shell--first-visit .home-dark-wilo-card {
   animation:
-    home-soft-rise 1200ms cubic-bezier(0.18, 0.9, 0.24, 1) 1860ms both,
+    home-soft-rise 1200ms cubic-bezier(0.18, 0.9, 0.24, 1) 2560ms both,
     home-wilo-gradient 8s ease-in-out 4s infinite;
 }
 
@@ -3855,7 +3855,7 @@ button {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 21px;
   padding: 16px 0 0;
 }
 
@@ -3873,8 +3873,8 @@ button {
 }
 
 .home-dark-profile strong {
-  font-size: 28px;
-  line-height: 34px;
+  font-size: 21px;
+  line-height: 31px;
   font-weight: 700;
 }
 
@@ -4770,7 +4770,7 @@ button {
 .moment-dark-summary__top h2 {
   margin: 0;
   color: #f4f4ef;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -4799,21 +4799,22 @@ button {
 
 .moment-dark-summary__segments {
   display: flex;
-  gap: 6px;
+  gap: 3px;
   margin-top: 8px;
 }
 
 .moment-dark-summary__segment {
   display: block;
   height: 14px;
-  border-radius: 999px;
+  border-radius: 2px 6px 2px 2px;
 }
 
 .moment-dark-summary__text {
   margin: 8px 0 0;
-  color: rgba(235, 236, 229, 0.86);
-  font-size: 13px;
+  color: rgba(226, 228, 217, 0.933);
+  font-size: 12px;
   line-height: 1.4;
+  opacity: 0.6; 
 }
 
 .moment-dark-summary__cta {
@@ -4901,7 +4902,7 @@ button {
 .moment-day-card--feature {
   grid-row: span 2;
   width: 100%;
-  min-height: 360px;
+  min-height: 216px;
   background: #222725;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
 }
@@ -4912,8 +4913,8 @@ button {
 }
 
 .moment-day-card__media--feature {
-  margin: 10px 10px 0;
-  height: 280px;
+  margin: 8px 8px 0;
+  height: 140px;
 }
 
 .moment-day-card__media--compact {
@@ -4931,13 +4932,12 @@ button {
 }
 
 .moment-day-card__body {
-  padding: 14px 16px 16px;
+  padding: 10px 12px 12px;
   color: #fff;
 }
 
 .moment-day-card__body--stacked {
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: flex-end;
 }
@@ -4974,7 +4974,7 @@ button {
   display: block;
   margin: 0;
   color: #ffffff;
-  font-size: 28px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -4983,9 +4983,10 @@ button {
 .moment-day-card__title-row span,
 .moment-detail-card__title-row span {
   display: block;
-  margin-top: 2px;
+  margin-top: 5px;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 .moment-day-card__accent-icon {
@@ -4997,13 +4998,13 @@ button {
 }
 
 .moment-day-card__chart {
-  margin-top: 8px;
-  height: 26px;
+  margin-top: 2px;
+  height: 24px;
   width: 100%;
 }
 
 .moment-day-card__chart .wave-bars {
-  height: 26px;
+  height: 23px;
   width: 100%;
 }
 
@@ -5026,7 +5027,7 @@ button {
 
 .moment-day-card--anxious,
 .moment-day-card--angry {
-  min-height: 140px;
+  min-height: 84px;
 }
 
 .moment-day-card--anxious {
@@ -5068,9 +5069,9 @@ button {
 }
 
 .moment-day-card--anxious .moment-day-card__media--compact {
-  margin: 0;
-  height: 70px;
-  border-radius: 12px;
+  margin: 2;
+  height: 45px;
+  border-radius: 10px;
 }
 
 .moment-day-card--anxious .moment-day-card__body--compact {
@@ -5192,7 +5193,7 @@ button {
 }
 
 .moment-detail-card__title-row h2 {
-  font-size: 34px;
+  font-size: 18px;
 }
 
 .moment-detail-card__text {
@@ -5541,13 +5542,13 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 10px 24px 22px;
+  padding: 8px 24px 16px;
   background: linear-gradient(180deg, rgba(24, 28, 26, 0) 0%, rgba(24, 28, 26, 0.95) 30%);
 }
 
 .analysis-input-bar__chips {
   position: relative;
-  margin: 0 16px 12px;
+  margin: 0 16px 8px;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
@@ -5686,11 +5687,11 @@ button {
   }
 
   .moment-day-grid {
-    gap: 12px;
+    gap: 8px;
   }
 
   .moment-day-card--feature {
-    min-height: 378px;
+    min-height: 216px;
   }
 
   .moment-detail-card__image {
@@ -6267,14 +6268,14 @@ button {
 
 .friend-memory-card__segments {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   margin-top: 10px;
 }
 
 .friend-memory-card__segment {
   display: block;
   height: 18px;
-  border-radius: 4px;
+  border-radius: 2px 6px 2px 2px;
 }
 
 .friend-memory-card__segment--labelled {

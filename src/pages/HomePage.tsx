@@ -26,7 +26,7 @@ export function HomePage({
   onOpenMomentDetail,
   onOpenPlan,
   onOpenWilo,
-  onOpenGoalAnalysis,
+  onOpenGoalAnalysis: _onOpenGoalAnalysis,
   goalAnalysisOpen = false,
   onCloseGoalAnalysis,
 }: HomePageProps) {
@@ -159,8 +159,7 @@ export function HomePage({
               <button
                 type="button"
                 className="home-dark-panel__header"
-                onClick={onOpenGoalAnalysis}
-                aria-label="打开睡眠提升分析"
+                aria-label="睡眠提升"
               >
                 <div className="home-dark-panel__header-main">
                   <div className="home-dark-panel__title-group">
